@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@layer tailwind-base, antd;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background: #000;
+}

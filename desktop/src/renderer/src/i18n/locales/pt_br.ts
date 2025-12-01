@@ -32,7 +32,10 @@ const pt_br = {
     keyboard: {
       paste: 'Colar',
       virtualKeyboard: 'Teclado Virtual',
-      ctrlAltDel: 'Ctrl + Alt + Delete'
+      ctrlAltDel: 'Ctrl + Alt + Delete',
+      shortcuts: 'Atalhos',
+      ctrlD: 'Ctrl + D',
+      winTab: 'Win + Tab'
     },
     mouse: {
       cursor: {

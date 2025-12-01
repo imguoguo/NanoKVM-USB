@@ -35,7 +35,10 @@ const zh_tw = {
     keyboard: {
       paste: '貼上',
       virtualKeyboard: '虛擬鍵盤',
-      ctrlAltDel: 'Ctrl + Alt + Delete'
+      ctrlAltDel: 'Ctrl + Alt + Delete',
+      shortcuts: '快捷鍵',
+      ctrlD: 'Ctrl + D',
+      winTab: 'Win + Tab'
     },
     mouse: {
       cursor: {
