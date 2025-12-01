@@ -10,7 +10,6 @@ import {
   scrollDirectionAtom,
   scrollIntervalAtom
 } from '@renderer/jotai/mouse'
-import { mouseJiggler } from '@renderer/libs/mouse-jiggler'
 import * as storage from '@renderer/libs/storage'
 
 import { Direction } from './direction'
@@ -49,7 +48,6 @@ export const Mouse = (): ReactElement => {
       setScrollInterval(interval)
     }
     const jiggler = storage.getMouseJigglerMode()
-    mouseJiggler.setMode(jiggler)
     setMouseJigglerMode(jiggler)
   }, [])
 

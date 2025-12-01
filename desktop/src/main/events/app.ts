@@ -1,3 +1,4 @@
+
 import { app, BrowserWindow, ipcMain, shell, systemPreferences } from 'electron'
 import type { IpcMainEvent, OpenExternalOptions } from 'electron'
 

@@ -1,13 +1,17 @@
 import { ReactElement, useEffect, useRef } from 'react'
 import { message } from 'antd'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
 
-import { IpcEvents } from '@common/ipc-events'
 import { resolutionAtom } from '@renderer/jotai/device'
-import { scrollDirectionAtom, scrollIntervalAtom } from '@renderer/jotai/mouse'
-import { mouseJiggler } from '@renderer/libs/mouse-jiggler'
-import type { Mouse as MouseKey } from '@renderer/types'
+import {
+  mouseJigglerModeAtom,
+  mouseLastMoveTimeAtom,
+  scrollDirectionAtom,
+  scrollIntervalAtom
+} from '@renderer/jotai/mouse'
+import { device } from '@renderer/libs/device'
+import { Key } from '@renderer/libs/device/mouse'
 
 export const Relative = (): ReactElement => {
   const { t } = useTranslation()
@@ -16,13 +20,11 @@ export const Relative = (): ReactElement => {
   const resolution = useAtomValue(resolutionAtom)
   const scrollDirection = useAtomValue(scrollDirectionAtom)
   const scrollInterval = useAtomValue(scrollIntervalAtom)
+  const mouseJigglerMode = useAtomValue(mouseJigglerModeAtom)
+  const setMouseLastMoveTime = useSetAtom(mouseLastMoveTimeAtom)
 
   const isLockedRef = useRef(false)
-  const keyRef = useRef<MouseKey>({
-    left: false,
-    right: false,
-    mid: false
-  })
+  const keyRef = useRef<Key>(new Key())
   const lastScrollTimeRef = useRef(0)
 
   useEffect(() => {
@@ -103,16 +105,19 @@ export const Relative = (): ReactElement => {
       await send(0, 0, 0)
     }
 
-    async function handleMouseMove(event: MouseEvent): Promise<void> {
+    async function handleMouseMove(event: any): Promise<void> {
       disableEvent(event)
 
-      const x = event.movementX || 0
-      const y = event.movementY || 0
+      const x = event.movementX || event.mozMovementX || event.webkitMovementX || 0
+      const y = event.movementY || event.mozMovementY || event.webkitMovementY || 0
       if (x === 0 && y === 0) return
 
       await send(Math.abs(x) < 10 ? x * 2 : x, Math.abs(y) < 10 ? y * 2 : y, 0)
 
-      mouseJiggler.moveEventCallback()
+      // mouse jiggler record last move time
+      if (mouseJigglerMode === 'enable') {
+        setMouseLastMoveTime(Date.now())
+      }
     }
 
     async function handleWheel(event: WheelEvent): Promise<void> {
@@ -132,12 +137,7 @@ export const Relative = (): ReactElement => {
     }
 
     async function send(x: number, y: number, scroll: number): Promise<void> {
-      const key =
-        (keyRef.current.left ? 1 : 0) |
-        (keyRef.current.right ? 2 : 0) |
-        (keyRef.current.mid ? 4 : 0)
-
-      await window.electron.ipcRenderer.invoke(IpcEvents.SEND_MOUSE_RELATIVE, key, x, y, scroll)
+      await device.sendMouseRelativeData(keyRef.current, x, y, scroll)
     }
 
     return (): void => {
@@ -149,7 +149,7 @@ export const Relative = (): ReactElement => {
       canvas.removeEventListener('wheel', handleWheel)
       canvas.removeEventListener('contextmenu', disableEvent)
     }
-  }, [resolution, scrollDirection, scrollInterval])
+  }, [resolution, scrollDirection, scrollInterval, mouseJigglerMode, setMouseLastMoveTime])
 
   function disableEvent(event: MouseEvent): void {
     event.preventDefault()

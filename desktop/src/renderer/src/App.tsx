@@ -13,7 +13,7 @@ import { Mouse } from '@renderer/components/mouse'
 import { VirtualKeyboard } from '@renderer/components/virtual-keyboard'
 import {
   resolutionAtom,
-  serialPortStateAtom,
+  serialStateAtom,
   videoScaleAtom,
   videoStateAtom
 } from '@renderer/jotai/device'
@@ -31,7 +31,7 @@ const App = (): ReactElement => {
 
   const videoScale = useAtomValue(videoScaleAtom)
   const videoState = useAtomValue(videoStateAtom)
-  const serialPortState = useAtomValue(serialPortStateAtom)
+  const serialPortState = useAtomValue(serialStateAtom)
   const mouseStyle = useAtomValue(mouseStyleAtom)
   const isKeyboardEnable = useAtomValue(isKeyboardEnableAtom)
   const setResolution = useSetAtom(resolutionAtom)

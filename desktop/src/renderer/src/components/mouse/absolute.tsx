@@ -1,22 +1,24 @@
 import { ReactElement, useEffect, useRef } from 'react'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 
-import { IpcEvents } from '@common/ipc-events'
 import { resolutionAtom } from '@renderer/jotai/device'
-import { scrollDirectionAtom, scrollIntervalAtom } from '@renderer/jotai/mouse'
-import { mouseJiggler } from '@renderer/libs/mouse-jiggler'
-import type { Mouse as MouseKey } from '@renderer/types'
+import {
+  mouseJigglerModeAtom,
+  mouseLastMoveTimeAtom,
+  scrollDirectionAtom,
+  scrollIntervalAtom
+} from '@renderer/jotai/mouse'
+import { device } from '@renderer/libs/device'
+import { Key } from '@renderer/libs/device/mouse'
 
 export const Absolute = (): ReactElement => {
   const resolution = useAtomValue(resolutionAtom)
   const scrollDirection = useAtomValue(scrollDirectionAtom)
   const scrollInterval = useAtomValue(scrollIntervalAtom)
+  const mouseJigglerMode = useAtomValue(mouseJigglerModeAtom)
+  const setMouseLastMoveTime = useSetAtom(mouseLastMoveTimeAtom)
 
-  const keyRef = useRef<MouseKey>({
-    left: false,
-    right: false,
-    mid: false
-  })
+  const keyRef = useRef<Key>(new Key())
   const lastScrollTimeRef = useRef(0)
 
   useEffect(() => {
@@ -79,7 +81,10 @@ export const Absolute = (): ReactElement => {
       disableEvent(event)
       await send(event)
 
-      mouseJiggler.moveEventCallback()
+      // mouse jiggler record last move time
+      if (mouseJigglerMode === 'enable') {
+        setMouseLastMoveTime(Date.now())
+      }
     }
 
     // mouse scroll
@@ -100,24 +105,11 @@ export const Absolute = (): ReactElement => {
     }
 
     async function send(event: MouseEvent, scroll: number = 0): Promise<void> {
-      const key =
-        (keyRef.current.left ? 1 : 0) |
-        (keyRef.current.right ? 2 : 0) |
-        (keyRef.current.mid ? 4 : 0)
-
       const rect = canvas!.getBoundingClientRect()
       const x = Math.abs(event.clientX - rect.left)
       const y = Math.abs(event.clientY - rect.top)
 
-      await window.electron.ipcRenderer.invoke(
-        IpcEvents.SEND_MOUSE_ABSOLUTE,
-        key,
-        rect.width,
-        rect.height,
-        x,
-        y,
-        scroll
-      )
+      await device.sendMouseAbsoluteData(keyRef.current, rect.width, rect.height, x, y, scroll)
     }
 
     return (): void => {
@@ -128,7 +120,7 @@ export const Absolute = (): ReactElement => {
       canvas.removeEventListener('click', disableEvent)
       canvas.removeEventListener('contextmenu', disableEvent)
     }
-  }, [resolution, scrollDirection, scrollInterval])
+  }, [resolution, scrollDirection, scrollInterval, mouseJigglerMode, setMouseLastMoveTime])
 
   function disableEvent(event: MouseEvent): void {
     event.preventDefault()

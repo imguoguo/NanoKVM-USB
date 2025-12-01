@@ -16,4 +16,4 @@ export const videoDeviceIdAtom = atom('')
 export const videoStateAtom = atom<VideoState>('disconnected')
 
 export const serialPortAtom = atom('')
-export const serialPortStateAtom = atom<SerialState>('disconnected')
+export const serialStateAtom = atom<SerialState>('disconnected')

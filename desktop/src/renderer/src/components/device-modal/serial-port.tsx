@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
 
 import { IpcEvents } from '@common/ipc-events'
-import { serialPortAtom, serialPortStateAtom } from '@renderer/jotai/device'
+import { serialPortAtom, serialStateAtom } from '@renderer/jotai/device'
 import * as storage from '@renderer/libs/storage'
 
 type Option = {
@@ -20,7 +20,7 @@ export const SerialPort = ({ setMsg }: SerialPortProps): ReactElement => {
   const { t } = useTranslation()
 
   const [serialPort, setSerialPort] = useAtom(serialPortAtom)
-  const [serialPortState, setSerialPortState] = useAtom(serialPortStateAtom)
+  const [serialPortState, setSerialPortState] = useAtom(serialStateAtom)
 
   const [options, setOptions] = useState<Option[]>([])
   const [isFailed, setIsFailed] = useState(false)

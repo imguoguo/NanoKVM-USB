@@ -8,9 +8,9 @@ import { Drawer } from 'vaul'
 import 'react-simple-keyboard/build/css/index.css'
 import '@renderer/assets/styles/keyboard.css'
 
-import { IpcEvents } from '@common/ipc-events'
 import { isKeyboardOpenAtom } from '@renderer/jotai/keyboard'
-import { KeyboardCodes } from '@renderer/libs/keyboard'
+import { device } from '@renderer/libs/device'
+import { KeyboardCodes, Modifiers } from '@renderer/libs/keyboard'
 
 import {
   doubleKeys,
@@ -30,7 +30,7 @@ export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps): ReactElement =>
 
   const [activeModifierKeys, setActiveModifierKeys] = useState<string[]>([])
 
-  const keyboardRef = useRef(null)
+  const keyboardRef = useRef<any>(null)
 
   async function onKeyPress(key: string): Promise<void> {
     if (modifierKeys.includes(key)) {
@@ -62,34 +62,55 @@ export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps): ReactElement =>
       return
     }
 
-    const modifier = getModifier()
-
-    await send(modifier, code)
+    const ctrl = getCtrl()
+    const keys = [0x00, 0x00, code, 0x00, 0x00, 0x00]
+    await device.sendKeyboardData(ctrl, keys)
   }
 
   async function sendKeyup(): Promise<void> {
-    await send(0, 0)
+    const ctrl = new Modifiers()
+    const keys = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+    await device.sendKeyboardData(ctrl, keys)
 
     setActiveModifierKeys([])
   }
 
-  async function send(modifier: number, key: number): Promise<void> {
-    await window.electron.ipcRenderer.invoke(IpcEvents.SEND_KEYBOARD, modifier, key)
-  }
+  function getCtrl(): Modifiers {
+    const modifiers = new Modifiers()
 
-  function getModifier(): number {
-    const pressedKeys = [
-      activeModifierKeys.includes('{controlleft}'),
-      activeModifierKeys.includes('{shiftleft}'),
-      activeModifierKeys.includes('{altleft}'),
-      activeModifierKeys.includes('{metaleft}') || activeModifierKeys.includes('{winleft}'),
-      activeModifierKeys.includes('{controlright}'),
-      activeModifierKeys.includes('{shiftright}'),
-      activeModifierKeys.includes('{altright}'),
-      activeModifierKeys.includes('{metaright}') || activeModifierKeys.includes('{winright}')
-    ]
+    activeModifierKeys.forEach((modifierKey) => {
+      const specialKey = specialKeyMap.get(modifierKey)!
+      switch (specialKey) {
+        case 'ControlLeft':
+          modifiers.leftCtrl = true
+          break
+        case 'ControlRight':
+          modifiers.rightCtrl = true
+          break
+        case 'ShiftLeft':
+          modifiers.leftShift = true
+          break
+        case 'ShiftRight':
+          modifiers.rightShift = true
+          break
+        case 'AltLeft':
+          modifiers.leftAlt = true
+          break
+        case 'AltRight':
+          modifiers.rightAlt = true
+          break
+        case 'MetaLeft':
+          modifiers.leftWindows = true
+          break
+        case 'MetaRight':
+          modifiers.rightWindows = true
+          break
+        default:
+          break
+      }
+    })
 
-    return pressedKeys.reduce((acc, isPressed, bit) => (isPressed ? acc | (1 << bit) : acc), 0)
+    return modifiers
   }
 
   function getButtonTheme(): KeyboardButtonTheme[] {
@@ -122,11 +143,13 @@ export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps): ReactElement =>
             </div>
           </div>
 
+          <div className="h-px flex-shrink-0 border-b bg-neutral-300" />
+
           <div data-vaul-no-drag className="keyboardContainer w-full">
             {/* main keyboard */}
             <Keyboard
               buttonTheme={getButtonTheme()}
-              keyboardRef={(r) => (keyboardRef.current = r)}
+              keyboardRef={(r: any) => (keyboardRef.current = r)}
               onKeyPress={onKeyPress}
               onKeyReleased={onKeyReleased}
               layoutName="default"

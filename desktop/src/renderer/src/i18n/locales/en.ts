@@ -33,7 +33,10 @@ const en = {
     keyboard: {
       paste: 'Paste',
       virtualKeyboard: 'Keyboard',
-      ctrlAltDel: 'Ctrl + Alt + Delete'
+      shortcuts: 'Shortcuts',
+      ctrlAltDel: 'Ctrl + Alt + Delete',
+      ctrlD: 'Ctrl + D',
+      winTab: 'Win + Tab'
     },
     mouse: {
       cursor: {

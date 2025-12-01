@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react'
+import { ReactElement } from 'react'
 import { Popover } from 'antd'
 import clsx from 'clsx'
 import { useAtom } from 'jotai'
@@ -6,12 +6,11 @@ import { MousePointerIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { mouseJigglerModeAtom } from '@renderer/jotai/mouse'
-import { mouseJiggler } from '@renderer/libs/mouse-jiggler'
 import * as storage from '@renderer/libs/storage'
 
 export const Jiggler = (): ReactElement => {
   const { t } = useTranslation()
-  const [jigglerMode, setJigglerMode] = useAtom(mouseJigglerModeAtom)
+  const [mouseJigglerMode, setMouseJigglerMode] = useAtom(mouseJigglerModeAtom)
 
   const mouseJigglerModes: { name: string; value: 'enable' | 'disable' }[] = [
     { name: t('mouse.jiggler.enable'), value: 'enable' },
@@ -19,13 +18,9 @@ export const Jiggler = (): ReactElement => {
   ]
 
   function update(mode: 'enable' | 'disable'): void {
+    setMouseJigglerMode(mode)
     storage.setMouseJigglerMode(mode)
-    setJigglerMode(mode)
   }
-
-  useEffect(() => {
-    mouseJiggler.setMode(jigglerMode)
-  }, [jigglerMode])
 
   const content = (
     <>
@@ -33,12 +28,12 @@ export const Jiggler = (): ReactElement => {
         <div
           key={mode.value}
           className={clsx(
-            'my-1 flex cursor-pointer items-center space-x-1 rounded py-1 pr-5 pl-2 hover:bg-neutral-700/50',
-            mode.value === jigglerMode ? 'text-blue-500' : 'text-neutral-300'
+            'my-1 flex cursor-pointer items-center space-x-1 rounded py-1 pl-2 pr-5 hover:bg-neutral-700/50',
+            mode.value === mouseJigglerMode ? 'text-blue-500' : 'text-neutral-300'
           )}
           onClick={() => update(mode.value)}
         >
-          {mode.name}
+          <span className="text-sm">{mode.name}</span>
         </div>
       ))}
     </>

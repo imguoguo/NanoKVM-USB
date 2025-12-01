@@ -2,9 +2,9 @@ import { ReactElement, useState } from 'react'
 import { Popover } from 'antd'
 import { KeyboardIcon } from 'lucide-react'
 
-import { CtrlAltDel } from './ctrl-alt-del'
 import { Paste } from './paste'
 import { VirtualKeyboard } from './virtual-keyboard'
+import { KeyboardShortcutsMenu } from './shortcuts-menu'
 
 export const Keyboard = (): ReactElement => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -12,8 +12,8 @@ export const Keyboard = (): ReactElement => {
   const content = (
     <>
       <Paste />
-      <CtrlAltDel />
       <VirtualKeyboard />
+      <KeyboardShortcutsMenu />
     </>
   )
 
