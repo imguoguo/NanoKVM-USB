@@ -4,6 +4,7 @@ import { MonitorIcon } from 'lucide-react';
 import { Device } from './device.tsx';
 import { Resolution } from './resolution.tsx';
 import { Scale } from './scale.tsx';
+import { Recorder } from './recorder.tsx';
 
 export const Video = () => {
   const content = (
@@ -11,6 +12,7 @@ export const Video = () => {
       <Resolution />
       <Scale />
       <Device />
+      <Recorder />
     </div>
   );
 

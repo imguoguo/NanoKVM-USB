@@ -25,6 +25,8 @@ const zh = {
       scale: '缩放',
       customResolution: '自定义',
       device: '设备',
+      startRecording: '开始录制',
+      stopRecording: '停止录制',
       custom: {
         title: '自定义分辨率',
         width: '宽度',

@@ -27,6 +27,8 @@ const en = {
       scale: 'Scale',
       customResolution: 'Custom',
       device: 'Device',
+      startRecording: 'Start Recording',
+      stopRecording: 'Stop Recording',
       custom: {
         title: 'Custom Resolution',
         width: 'Width',
