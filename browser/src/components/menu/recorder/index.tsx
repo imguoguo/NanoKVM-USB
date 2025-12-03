@@ -84,19 +84,16 @@ export const Recorder = () => {
   };
 
   return (
-    <div
-      className="flex h-[30px] cursor-pointer items-center space-x-1 rounded px-3 text-neutral-300 hover:bg-neutral-700/50"
-      onClick={isRecording ? handleStopRecording : handleStartRecording}
-    >
+    <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded text-white hover:bg-neutral-700/70"
+    onClick={isRecording ? handleStopRecording : handleStartRecording}>
+      
       {isRecording ? (
         <>
           <Pause size={18} />
-          <span>{t('video.stopRecording')}</span>
         </>
       ) : (
         <>
           <Videotape size={18} />
-          <span>{t('video.startRecording')}</span>
         </>
       )}
     </div>
