@@ -1,11 +1,8 @@
 import { useState, useRef } from 'react';
-import { Pause, Videotape } from 'lucide-react';
+import { Video } from 'lucide-react';
 import { camera } from '@/libs/camera';
-import { useTranslation } from 'react-i18next';
 
 export const Recorder = () => {
-  const { t } = useTranslation();
-
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder>();
   const recordedChunksRef = useRef<Blob[]>([]);
@@ -86,16 +83,7 @@ export const Recorder = () => {
   return (
     <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded text-white hover:bg-neutral-700/70"
     onClick={isRecording ? handleStopRecording : handleStartRecording}>
-      
-      {isRecording ? (
-        <>
-          <Pause size={18} />
-        </>
-      ) : (
-        <>
-          <Videotape size={18} />
-        </>
-      )}
+      <Video className={isRecording ? 'text-red-400 animate-pulse' : ''} size={18} />
     </div>
   );
 };
