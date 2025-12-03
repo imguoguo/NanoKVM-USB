@@ -5,9 +5,9 @@ import { camera } from '@/libs/camera';
 export const Recorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder>();
-  const recordedChunksRef = useRef<Blob[]>([]);
+  const fileWritableRef = useRef<FileSystemWritableFileStream>(null);
 
-  const handleStartRecording = () => {
+  const handleStartRecording = async () => {
 
     const stream = camera.getStream();
     if (!stream) {
@@ -15,56 +15,40 @@ export const Recorder = () => {
     }
 
     try {
-      recordedChunksRef.current = [];
+      const handle = await (window as any).showSaveFilePicker({
+        suggestedName: `recording-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`,
+        types: [{
+          description: 'Sipeed NanoKVM-USB Recorder',
+          accept: { 'video/webm': ['.webm'] }
+        }]
+      });
+
+      const writable = await handle.createWritable();
+      fileWritableRef.current = writable;
 
       const recorder = new MediaRecorder(stream, {
         mimeType: 'video/webm'
       });
 
-      recorder.ondataavailable = (event) => {
+      recorder.ondataavailable = async (event) => {
         if (event.data && event.data.size > 0) {
-          recordedChunksRef.current.push(event.data);
+          if (fileWritableRef.current) {
+            await fileWritableRef.current.write(event.data);
+          } else {
+            recorder.stop();
+          }
         }
       };
 
       recorder.onstop = async () => {
-        const chunks = recordedChunksRef.current;
-
-        if (chunks.length === 0) {
-          return;
+        if (fileWritableRef.current) {
+          await fileWritableRef.current.close();
+          fileWritableRef.current = null;
         }
-
-        const blob = new Blob(chunks, { type: 'video/webm' });
-
-        try {
-          // Check if browser support File System Access API
-          if ('showSaveFilePicker' in window) {
-            const handle = await (window as any).showSaveFilePicker({
-              suggestedName: `recording-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`,
-              types: [{
-                description: 'Sipeed NanoKVM-USB Recorder',
-                accept: { 'video/webm': ['.webm'] }
-              }]
-            });
-
-            const writable = await handle.createWritable();
-            await writable.write(blob);
-            await writable.close();
-
-          } else {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `recording-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
-            a.click();
-            URL.revokeObjectURL(url);
-          }
-        } catch (err: any) {
-          console.error(err);
-        }
+        setIsRecording(false);
       };
 
-      recorder.start();
+      recorder.start(1000);
       mediaRecorderRef.current = recorder;
       setIsRecording(true);
     } catch (err) {
