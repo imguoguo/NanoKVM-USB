@@ -4,12 +4,7 @@ import { SendHorizonal } from 'lucide-react';
 import { device } from '@/libs/device';
 import { Modifiers } from '@/libs/device/keyboard.ts';
 import { KeyboardCodes } from '@/libs/keyboard';
-
-interface ShortcutProps {
-  label: string;
-  modifiers?: Partial<Modifiers>;
-  keyCode: string;
-}
+import { ShortcutProps } from '@/libs/device/keyboard.ts'
 
 export const Shortcut = ({ label, modifiers = {}, keyCode }: ShortcutProps) => {
   const [isLoading, setIsLoading] = useState(false);
