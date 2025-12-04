@@ -1,25 +1,16 @@
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button, Input, Modal, Space } from 'antd';
 import { SendHorizonal } from 'lucide-react';
-
-
-
 import { modifierKeys, Modifiers, ShortcutProps } from '@/libs/device/keyboard.ts';
 
-
-
-
-
 interface KeyboardShortcutRecordProps {
-  setStoredShortcuts: Dispatch<SetStateAction<ShortcutProps[]>>
+  addShortcut: (shortcut: ShortcutProps) => void;
 }
 
-
-export const KeyboardShortcutRecord = ({setStoredShortcuts}: KeyboardShortcutRecordProps) => {
+export const KeyboardShortcutRecord = ({addShortcut}: KeyboardShortcutRecordProps) => {
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isRecordingShortcut, setIsRecordingShortcut] = useState<boolean>(false)
-
   const [shortcut, setShortcut] = useState<ShortcutProps | null>(null)
   const [shortcutLabel, setShortcutLabel] = useState<string>("")
   const [shortcutFixedLabel, setShortcutFixedLabel] = useState<string>("")
@@ -35,37 +26,24 @@ export const KeyboardShortcutRecord = ({setStoredShortcuts}: KeyboardShortcutRec
     return pressedKey;
   }
 
-  function saveShortcut(shortcut: ShortcutProps) {
-    if (shortcut == null) return;
-
-    let shortcuts = localStorage.getItem("shortcuts");
-    if (shortcuts === null) {
-      shortcuts = "[]";
-    }
-
-    const shortcutsObject: ShortcutProps[] = JSON.parse(shortcuts);
-    shortcutsObject.push(shortcut);
-    localStorage.setItem("shortcuts", JSON.stringify(shortcutsObject));
-    setStoredShortcuts(shortcutsObject);
-    cleanShortcut();
-  }
-
   function handleModelDone() {
-    if (shortcut == null) return;
-    saveShortcut({
+    if (shortcut == null) {
+      cleanShortcut();
+      return;
+    }
+    addShortcut({
       modifiers: shortcut.modifiers,
       label: shortcutLabel,
       keyCode: shortcut.keyCode
     });
+    cleanShortcut();
   }
 
   function cleanShortcut() {
-
     if (isRecordingShortcut) {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyDown);
     }
-
 
     setIsModalOpen(false);
     console.log(isModalOpen)

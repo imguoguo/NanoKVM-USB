@@ -35,7 +35,7 @@ export const KeyboardShortcutsMenu = () => {
     },
   ]
 
-  function saveShortcut(shortcut: ShortcutProps) {
+  const addShortcut = (shortcut: ShortcutProps) => {
     if (shortcut == null) return;
 
     let shortcuts = localStorage.getItem("shortcuts");
@@ -54,7 +54,7 @@ export const KeyboardShortcutsMenu = () => {
     const shortcuts = localStorage.getItem("shortcuts");
     if (shortcuts === null) {
       predefinedShortcuts.forEach(shortcut => {
-        saveShortcut(shortcut);
+        addShortcut(shortcut);
       })
     } else {
       const shortcutsObject: ShortcutProps[] = JSON.parse(shortcuts);
@@ -76,7 +76,7 @@ export const KeyboardShortcutsMenu = () => {
           ))}
           <Divider style={{ margin: '5px 0 5px 0' }} />
           <KeyboardShortcutRecord
-            setStoredShortcuts={setStoredShortcuts}/>
+            addShortcut={addShortcut}/>
         </div>
       }
       trigger="click"
