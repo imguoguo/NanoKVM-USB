@@ -2,16 +2,9 @@ import { useEffect, useState } from 'react';
 import { Divider, Popover } from 'antd';
 import { SendHorizonal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
-
-
 import { ShortcutProps } from '@/libs/device/keyboard.ts';
-
-
-
 import { Shortcut } from './shortcut.tsx';
 import { KeyboardShortcutRecord } from '@/components/menu/keyboard/shortcut-record.tsx';
-
 
 export const KeyboardShortcutsMenu = () => {
   const { t } = useTranslation();
@@ -47,7 +40,6 @@ export const KeyboardShortcutsMenu = () => {
     shortcutsObject.push(shortcut);
     localStorage.setItem("shortcuts", JSON.stringify(shortcutsObject));
     setStoredShortcuts(shortcutsObject);
-    // cleanShortcut();
   }
 
   useEffect(() => {
@@ -66,13 +58,13 @@ export const KeyboardShortcutsMenu = () => {
     <Popover
       content={
         <div className="flex flex-col gap-1">
-          {storedShortcuts.map((shortcut) => (
-            <Shortcut
-              key={shortcut.keyCode}
-              label={shortcut.label}
-              modifiers={shortcut.modifiers}
-              keyCode={shortcut.keyCode}
-            />
+          {storedShortcuts.map((shortcut, index) => (
+              <Shortcut
+                key={index}
+                label={shortcut.label}
+                modifiers={shortcut.modifiers}
+                keyCode={shortcut.keyCode}
+              />
           ))}
           <Divider style={{ margin: '5px 0 5px 0' }} />
           <KeyboardShortcutRecord
