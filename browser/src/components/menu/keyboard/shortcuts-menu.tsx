@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Popover } from 'antd';
+import { Divider, Popover } from 'antd';
 import { SendHorizonal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ShortcutProps } from '@/libs/device/keyboard.ts'
+
+
+
+import { ShortcutProps } from '@/libs/device/keyboard.ts';
+
 
 
 import { Shortcut } from './shortcut.tsx';
+import { KeyboardShortcutRecord } from '@/components/menu/keyboard/shortcut-record.tsx';
 
 
 export const KeyboardShortcutsMenu = () => {
@@ -46,10 +51,14 @@ export const KeyboardShortcutsMenu = () => {
   }
 
   useEffect(() => {
-    if (localStorage.getItem("shortcuts") === null) {
+    const shortcuts = localStorage.getItem("shortcuts");
+    if (shortcuts === null) {
       predefinedShortcuts.forEach(shortcut => {
         saveShortcut(shortcut);
       })
+    } else {
+      const shortcutsObject: ShortcutProps[] = JSON.parse(shortcuts);
+      setStoredShortcuts(shortcutsObject);
     }
   }, []);
 
@@ -65,6 +74,9 @@ export const KeyboardShortcutsMenu = () => {
               keyCode={shortcut.keyCode}
             />
           ))}
+          <Divider style={{ margin: '5px 0 5px 0' }} />
+          <KeyboardShortcutRecord
+            setStoredShortcuts={setStoredShortcuts}/>
         </div>
       }
       trigger="click"

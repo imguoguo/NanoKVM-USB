@@ -6,6 +6,8 @@ interface ShortcutProps {
   keyCode: string;
 }
 
+const modifierKeys = new Set(['Control', 'Shift', 'Alt', 'Meta']);
+
 class Modifiers {
   public rightWindows: boolean = false;
   public rightAlt: boolean = false;
@@ -56,4 +58,4 @@ class Modifiers {
   }
 }
 
-export { type ShortcutProps, Modifiers };
+export { type ShortcutProps, Modifiers, modifierKeys };
