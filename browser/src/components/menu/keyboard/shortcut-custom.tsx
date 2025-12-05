@@ -6,15 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { isKeyboardEnableAtom } from '@/jotai/keyboard.ts';
 import { modifierKeys, Modifiers, ShortcutProps } from '@/libs/device/keyboard.ts';
 
-interface KeyboardShortcutRecordProps {
+interface KeyboardShortcutCustomProps {
   addShortcut: (shortcut: ShortcutProps) => void;
 }
 
-export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordProps) => {
+export const KeyboardShortcutCustom = ({ addShortcut }: KeyboardShortcutCustomProps) => {
   const { t } = useTranslation();
   const setIsKeyboardEnable = useSetAtom(isKeyboardEnableAtom);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isRecordingShortcut, setIsRecordingShortcut] = useState<boolean>(false);
+  const [isCapturingShortcut, setIsCapturingShortcut] = useState<boolean>(false);
   const [shortcut, setShortcut] = useState<ShortcutProps | null>(null);
   const [shortcutLabel, setShortcutLabel] = useState<string>('');
   const [shortcutFixedLabel, setShortcutFixedLabel] = useState<string>('');
@@ -51,7 +51,7 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
   }
 
   function cleanShortcut() {
-    setIsRecordingShortcut(false);
+    setIsCapturingShortcut(false);
     setIsModalOpen(false);
     setShortcut(null);
     setShortcutLabel('');
@@ -72,7 +72,7 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
         pressedModifiersRef.current.delete(event.code);
       }
     } else {
-      setIsRecordingShortcut(false);
+      setIsCapturingShortcut(false);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyDown);
       const modifiers = Modifiers.getModifiers(event, pressedModifiersRef.current);
@@ -100,10 +100,10 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
   }, [isModalOpen]);
 
   useEffect(() => {
-    if (inputRef.current && !isRecordingShortcut) {
+    if (inputRef.current && !isCapturingShortcut) {
       inputRef.current.blur();
     }
-  }, [isRecordingShortcut]);
+  }, [isCapturingShortcut]);
 
   return (
     <>
@@ -134,12 +134,12 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
             value={shortcutFixedLabel}
             prefix={<KeyboardIcon size={16} />}
             onFocus={() => {
-              setIsRecordingShortcut(true);
+              setIsCapturingShortcut(true);
               window.addEventListener('keydown', handleKeyDown);
               window.addEventListener('keyup', handleKeyDown);
             }}
             onBlur={() => {
-              setIsRecordingShortcut(false);
+              setIsCapturingShortcut(false);
               window.removeEventListener('keydown', handleKeyDown);
               window.removeEventListener('keyup', handleKeyDown);
             }}

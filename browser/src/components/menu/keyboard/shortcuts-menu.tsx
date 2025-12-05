@@ -4,7 +4,7 @@ import { SendHorizonal, Trash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ShortcutProps } from '@/libs/device/keyboard.ts';
 import { Shortcut } from './shortcut.tsx';
-import { KeyboardShortcutRecord } from '@/components/menu/keyboard/shortcut-record.tsx';
+import { KeyboardShortcutCustom } from '@/components/menu/keyboard/shortcut-custom.tsx';
 
 export const KeyboardShortcutsMenu = () => {
   const { t } = useTranslation();
@@ -85,7 +85,7 @@ export const KeyboardShortcutsMenu = () => {
             </>
           ))}
           <Divider style={{ margin: '5px 0 5px 0' }} />
-          <KeyboardShortcutRecord
+          <KeyboardShortcutCustom
             addShortcut={addShortcut}/>
         </div>
       }
