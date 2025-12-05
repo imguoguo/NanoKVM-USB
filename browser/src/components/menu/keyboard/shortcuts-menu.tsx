@@ -12,17 +12,17 @@ export const KeyboardShortcutsMenu = () => {
   const [storedShortcuts, setStoredShortcuts] = useState<ShortcutProps[]>([]);
   const predefinedShortcuts : ShortcutProps[] = [
     {
-      label: t('keyboard.ctrlAltDel'),
+      label: t('keyboard.shortcut.ctrlAltDel'),
       modifiers: { leftCtrl: true, leftAlt: true },
       keyCode: 'Delete',
     },
     {
-      label: t('keyboard.ctrlD'),
+      label: t('keyboard.shortcut.ctrlD'),
       modifiers: { leftCtrl: true },
       keyCode: 'KeyD',
     },
     {
-      label: t('keyboard.winTab'),
+      label: t('keyboard.shortcut.winTab'),
       modifiers: { leftWindows: true },
       keyCode: 'Tab',
     },
@@ -98,7 +98,7 @@ export const KeyboardShortcutsMenu = () => {
     >
       <div className="flex h-[30px] cursor-pointer items-center space-x-1 rounded px-3 text-neutral-300 hover:bg-neutral-700/60">
         <SendHorizonal size={18} />
-        <span>{t('keyboard.shortcuts')}</span>
+        <span>{t('keyboard.shortcut.title')}</span>
       </div>
     </Popover>
   );

@@ -1,4 +1,6 @@
 import { useState, PropsWithChildren } from 'react';
+import { SendHorizonal } from 'lucide-react';
+
 import { device } from '@/libs/device';
 import { Modifiers } from '@/libs/device/keyboard.ts';
 import { KeyboardCodes } from '@/libs/keyboard';
@@ -33,10 +35,11 @@ export const Shortcut = ({ label, modifiers = {}, keyCode , children}: ShortcutP
   return (
     <div
       className="flex h-[30px] cursor-pointer items-center space-x-1 rounded px-3 text-neutral-300 hover:bg-neutral-700/60"
-      onClick={handleClick}
-    >
-      <span className="w-full">{label}</span>
-      {children}
-    </div>
-  );
+  onClick={handleClick}
+  >
+  <SendHorizonal size={18} />
+  <span className="w-full">{label}</span>
+  {children}
+  </div>
+);
 };

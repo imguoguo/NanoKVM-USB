@@ -1,7 +1,9 @@
-import { useRef, useState } from 'react';
-import { Button, Input, Modal, Space } from 'antd';
-import { SendHorizonal } from 'lucide-react';
-
+import { useEffect, useRef, useState } from 'react';
+import { Input, InputRef, Modal, Space } from 'antd';
+import { useSetAtom } from 'jotai';
+import { KeyboardIcon, SquarePenIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { isKeyboardEnableAtom } from '@/jotai/keyboard.ts';
 import { modifierKeys, Modifiers, ShortcutProps } from '@/libs/device/keyboard.ts';
 
 interface KeyboardShortcutRecordProps {
@@ -9,12 +11,15 @@ interface KeyboardShortcutRecordProps {
 }
 
 export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordProps) => {
+  const { t } = useTranslation();
+  const setIsKeyboardEnable = useSetAtom(isKeyboardEnableAtom);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isRecordingShortcut, setIsRecordingShortcut] = useState<boolean>(false);
   const [shortcut, setShortcut] = useState<ShortcutProps | null>(null);
   const [shortcutLabel, setShortcutLabel] = useState<string>('');
   const [shortcutFixedLabel, setShortcutFixedLabel] = useState<string>('');
   const pressedModifiersRef = useRef<Set<string>>(new Set());
+  const inputRef = useRef<InputRef>(null);
 
   function getPressedShortcutString(event: KeyboardEvent) {
     let pressedKey: string = '';
@@ -22,7 +27,13 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
     pressedKey += event.shiftKey ? 'Shift + ' : '';
     pressedKey += event.altKey ? 'Alt + ' : '';
     pressedKey += event.metaKey ? 'Meta + ' : '';
-    pressedKey += !modifierKeys.has(event.key) ? event.key : '';
+    if (!modifierKeys.has(event.key)) {
+      if (event.code.startsWith('Key') || event.code.startsWith('Digit')) {
+        pressedKey += event.code.slice(-1);
+      } else {
+        pressedKey += event.key;
+      }
+    }
     return pressedKey;
   }
 
@@ -33,18 +44,14 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
     }
     addShortcut({
       modifiers: shortcut.modifiers,
-      label: shortcutLabel,
+      label: shortcutLabel == '' ? shortcutFixedLabel : shortcutLabel,
       keyCode: shortcut.keyCode
     });
     cleanShortcut();
   }
 
   function cleanShortcut() {
-    if (isRecordingShortcut) {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyDown);
-    }
-
+    setIsRecordingShortcut(false);
     setIsModalOpen(false);
     setShortcut(null);
     setShortcutLabel('');
@@ -56,7 +63,6 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
     event.stopPropagation();
 
     const label = getPressedShortcutString(event);
-    setShortcutLabel(label);
     setShortcutFixedLabel(label);
 
     if (modifierKeys.has(event.key)) {
@@ -66,6 +72,7 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
         pressedModifiersRef.current.delete(event.code);
       }
     } else {
+      setIsRecordingShortcut(false);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyDown);
       const modifiers = Modifiers.getModifiers(event, pressedModifiersRef.current);
@@ -75,8 +82,28 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
         keyCode: event.code
       };
       setShortcut(ret);
+
     }
   }
+
+  function handleFullscreen() {
+    if (!document.fullscreenElement) {
+      const element = document.documentElement;
+      element.requestFullscreen().then();
+      // @ts-expect-error - https://developer.mozilla.org/en-US/docs/Web/API/Keyboard/lock
+      navigator.keyboard?.lock();
+    }
+  }
+
+  useEffect(() => {
+    setIsKeyboardEnable(!isModalOpen);
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (inputRef.current && !isRecordingShortcut) {
+      inputRef.current.blur();
+    }
+  }, [isRecordingShortcut]);
 
   return (
     <>
@@ -86,26 +113,45 @@ export const KeyboardShortcutRecord = ({ addShortcut }: KeyboardShortcutRecordPr
           setIsModalOpen(true);
         }}
       >
-        <SendHorizonal size={18} />
-        <span>录制快捷键</span>
+        <span>{t('keyboard.shortcut.custom')}</span>
       </div>
-      <Modal title="Title" open={isModalOpen} onOk={handleModelDone} onCancel={cleanShortcut}>
+      <Modal
+        width={400}
+        title={t('keyboard.shortcut.custom')}
+        open={isModalOpen}
+        onOk={handleModelDone}
+        onCancel={cleanShortcut}
+        okText={t('keyboard.shortcut.save')}
+        cancelText={t('keyboard.shortcut.cancel')}>
         <Space direction="vertical" style={{ width: '100%' }} size="middle">
+          <div className="flex">
+            {t('keyboard.shortcut.captureTips')}
+            <a onClick={handleFullscreen}>{t('keyboard.shortcut.enterFullScreen')}</a>
+          </div>
           <Input
-            placeholder="Shortcut Label"
-            value={shortcutLabel}
-            onChange={(e) => setShortcutLabel(e.target.value)}
-          />
-          <div>快捷键: {shortcutFixedLabel}</div>
-          <Button
-            onClick={() => {
+            ref={inputRef}
+            placeholder={t('keyboard.shortcut.capture')}
+            value={shortcutFixedLabel}
+            prefix={<KeyboardIcon size={16} />}
+            onFocus={() => {
               setIsRecordingShortcut(true);
               window.addEventListener('keydown', handleKeyDown);
               window.addEventListener('keyup', handleKeyDown);
             }}
-          >
-            Start recording
-          </Button>
+            onBlur={() => {
+              setIsRecordingShortcut(false);
+              window.removeEventListener('keydown', handleKeyDown);
+              window.removeEventListener('keyup', handleKeyDown);
+            }}
+          />
+
+          <Input
+            placeholder={shortcutFixedLabel || t('keyboard.shortcut.label')}
+            value={shortcutLabel}
+            prefix={<SquarePenIcon size={16} />}
+            onChange={(e) => setShortcutLabel(e.target.value)}
+          />
+
         </Space>
       </Modal>
     </>
