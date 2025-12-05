@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Divider, Popover } from 'antd';
-import { SendHorizonal } from 'lucide-react';
+import { Button, Divider, Popover } from 'antd';
+import { SendHorizonal, Trash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ShortcutProps } from '@/libs/device/keyboard.ts';
 import { Shortcut } from './shortcut.tsx';
@@ -42,6 +42,14 @@ export const KeyboardShortcutsMenu = () => {
     setStoredShortcuts(shortcutsObject);
   }
 
+  const removeShortcut = (indexToRemove: number) => {
+    const newShortcuts = storedShortcuts.filter(
+      (_, index) => index !== indexToRemove
+    );
+    localStorage.setItem("shortcuts", JSON.stringify(newShortcuts));
+    setStoredShortcuts(newShortcuts);
+  }
+
   useEffect(() => {
     const shortcuts = localStorage.getItem("shortcuts");
     if (shortcuts === null) {
@@ -59,12 +67,22 @@ export const KeyboardShortcutsMenu = () => {
       content={
         <div className="flex flex-col gap-1">
           {storedShortcuts.map((shortcut, index) => (
+            <>
               <Shortcut
                 key={index}
                 label={shortcut.label}
                 modifiers={shortcut.modifiers}
                 keyCode={shortcut.keyCode}
-              />
+              >
+                <Button
+                  className="ml-auto"
+                  type="text"
+                  danger
+                  icon={<Trash size={16} />}
+                  onClick={() => {removeShortcut(index)}}
+                />
+              </Shortcut>
+            </>
           ))}
           <Divider style={{ margin: '5px 0 5px 0' }} />
           <KeyboardShortcutRecord

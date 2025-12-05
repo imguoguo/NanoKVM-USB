@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, PropsWithChildren } from 'react';
 import { SendHorizonal } from 'lucide-react';
 
 import { device } from '@/libs/device';
@@ -6,7 +6,9 @@ import { Modifiers } from '@/libs/device/keyboard.ts';
 import { KeyboardCodes } from '@/libs/keyboard';
 import { ShortcutProps } from '@/libs/device/keyboard.ts'
 
-export const Shortcut = ({ label, modifiers = {}, keyCode }: ShortcutProps) => {
+type ShortcutPropsWithChildren = ShortcutProps & PropsWithChildren
+
+export const Shortcut = ({ label, modifiers = {}, keyCode , children}: ShortcutPropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleClick(): Promise<void> {
@@ -36,7 +38,8 @@ export const Shortcut = ({ label, modifiers = {}, keyCode }: ShortcutProps) => {
       onClick={handleClick}
     >
       <SendHorizonal size={18} />
-      <span>{label}</span>
+      <span className="w-full">{label}</span>
+      {children}
     </div>
   );
 };
