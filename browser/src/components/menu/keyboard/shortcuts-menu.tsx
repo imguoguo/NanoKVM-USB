@@ -4,7 +4,7 @@ import { SendHorizonal, Trash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ShortcutProps } from '@/libs/device/keyboard.ts';
 import { Shortcut } from './shortcut.tsx';
-import { KeyboardShortcutCustom } from '@/components/menu/keyboard/shortcut-custom.tsx';
+import { KeyboardShortcutCustom } from './shortcut-custom.tsx';
 
 export const KeyboardShortcutsMenu = () => {
   const { t } = useTranslation();

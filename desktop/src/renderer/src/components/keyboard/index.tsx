@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useRef } from 'react'
-import { Modifiers } from '@renderer/libs/device/keyboard';
+import { Modifiers } from '@renderer/libs/device/keyboard'
 import { KeyboardCodes } from '@renderer/libs/keyboard'
 import { IpcEvents } from '@common/ipc-events'
 
