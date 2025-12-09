@@ -4,12 +4,14 @@ import { MonitorIcon } from 'lucide-react';
 import { Device } from './device.tsx';
 import { Resolution } from './resolution.tsx';
 import { Scale } from './scale.tsx';
+import { Rotate } from './rotate.tsx';
 
 export const Video = () => {
   const content = (
     <div className="flex flex-col space-y-1">
       <Resolution />
       <Scale />
+      <Rotate />
       <Device />
     </div>
   );
