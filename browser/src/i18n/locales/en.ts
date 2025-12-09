@@ -25,6 +25,7 @@ const en = {
     video: {
       resolution: 'Resolution',
       scale: 'Scale',
+      rotate: 'Rotate',
       customResolution: 'Custom',
       device: 'Device',
       custom: {
