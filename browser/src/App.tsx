@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Alert, Result, Spin } from 'antd';
 import clsx from 'clsx';
 import { useAtomValue, useSetAtom, useAtom } from 'jotai';
@@ -29,17 +29,17 @@ const App = () => {
   const isKeyboardEnable = useAtomValue(isKeyboardEnableAtom);
   const setResolution = useSetAtom(resolutionAtom);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const requestRef = useRef<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isCameraAvailable, setIsCameraAvailable] = useState(false);
 
-  const renderFrame = useCallback(() => {
-    const video = videoRef.current;
+  const videoStyle = clsx('block select-none origin-center max-w-full max-h-full object-scale-down', mouseStyle)
+
+  const renderFrame = (frame: VideoFrame) => {
     const canvas = canvasRef.current;
 
-    if (!video || !canvas || video.paused || video.ended) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -51,17 +51,15 @@ const App = () => {
     ctx.rotate((videoRotate * Math.PI) / 180);
 
     ctx.drawImage(
-      video,
-      -video.videoWidth / 2,
-      -video.videoHeight / 2,
-      video.videoWidth,
-      video.videoHeight
+      frame,
+      -frame.displayWidth / 2,
+      -frame.displayHeight / 2,
+      frame.displayWidth,
+      frame.displayHeight
     );
 
     ctx.restore();
-
-    requestRef.current = requestAnimationFrame(renderFrame);
-  }, [videoRotate]);
+  };
 
   const setCanvas = () => {
     const video = videoRef.current;
@@ -77,11 +75,20 @@ const App = () => {
       canvas.height = video.videoWidth;
     }
 
-    if (requestRef.current) {
-      cancelAnimationFrame(requestRef.current);
+    if (videoRotate !== 0) {
+      processVideoFrames();
     }
+  }
 
-    renderFrame();
+  const processVideoFrames = () => {
+    const video = videoRef.current;
+    if (video == null || videoRotate === 0) return;
+    video.requestVideoFrameCallback(() => {
+      const frame = new VideoFrame(video);
+      renderFrame(frame);
+      frame.close();
+      processVideoFrames();
+    })
   }
 
   useEffect(() => {
@@ -173,21 +180,23 @@ const App = () => {
 
       <video
         id="video"
-        className="hidden"
+        className={clsx(videoRotate == 0 ? videoStyle : "hidden", "min-h-[480px] min-w-[640px]")}
         ref={videoRef}
         autoPlay
         playsInline
         onLoadedMetadata={setCanvas}
       />
 
-      <canvas
-        id="video-canvas"
-        ref={canvasRef}
-        className={clsx('block min-h-[480px] min-w-[640px] select-none origin-center max-w-full max-h-full object-scale-down', mouseStyle)}
-        style={{
-          transform: `scale(${videoScale})`,
-        }}
-      />
+      {videoRotate == 0 ||
+        <canvas
+          id="video-canvas"
+          ref={canvasRef}
+          className={videoStyle}
+          style={{
+            transform: `scale(${videoScale})`,
+          }}
+        />
+      }
 
       <VirtualKeyboard isBigScreen={isBigScreen} />
     </>

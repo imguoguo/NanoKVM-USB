@@ -3,7 +3,7 @@ import { message } from 'antd';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 
-import { resolutionAtom } from '@/jotai/device.ts';
+import { resolutionAtom, videoRotateAtom } from '@/jotai/device.ts';
 import {
   mouseJigglerModeAtom,
   mouseLastMoveTimeAtom,
@@ -18,6 +18,7 @@ export const Relative = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const resolution = useAtomValue(resolutionAtom);
+  const videoRotate = useAtomValue(videoRotateAtom);
   const scrollDirection = useAtomValue(scrollDirectionAtom);
   const scrollInterval = useAtomValue(scrollIntervalAtom);
   const mouseJigglerMode = useAtomValue(mouseJigglerModeAtom);
@@ -41,7 +42,7 @@ export const Relative = () => {
 
   // listen mouse events
   useEffect(() => {
-    const canvas = document.getElementById('video-canvas');
+    const canvas = document.getElementById(videoRotate == 0 ? 'video': 'video-canvas');
     if (!canvas) return;
 
     document.addEventListener('pointerlockchange', handlePointerLockChange);
@@ -150,7 +151,7 @@ export const Relative = () => {
       canvas.removeEventListener('wheel', handleWheel);
       canvas.removeEventListener('contextmenu', disableEvent);
     };
-  }, [resolution, scrollDirection, scrollInterval, mouseJigglerMode, setMouseLastMoveTime]);
+  }, [resolution, scrollDirection, scrollInterval, mouseJigglerMode, setMouseLastMoveTime, videoRotate]);
 
   async function send(x: number, y: number, scroll: number) {
     await device.sendMouseRelativeData(keyRef.current, x, y, scroll);

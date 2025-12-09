@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 
-import { resolutionAtom } from '@/jotai/device.ts';
+import { resolutionAtom, videoRotateAtom } from '@/jotai/device.ts';
 import {
   mouseJigglerModeAtom,
   mouseLastMoveTimeAtom,
@@ -13,6 +13,7 @@ import { Key } from '@/libs/device/mouse.ts';
 
 export const Absolute = () => {
   const resolution = useAtomValue(resolutionAtom);
+  const videoRotate = useAtomValue(videoRotateAtom);
   const scrollDirection = useAtomValue(scrollDirectionAtom);
   const scrollInterval = useAtomValue(scrollIntervalAtom);
   const mouseJigglerMode = useAtomValue(mouseJigglerModeAtom);
@@ -23,7 +24,7 @@ export const Absolute = () => {
 
   // listen mouse events
   useEffect(() => {
-    const canvas = document.getElementById('video-canvas');
+    const canvas = document.getElementById(videoRotate == 0 ? 'video': 'video-canvas');
     if (!canvas) return;
 
     canvas.addEventListener('mousedown', handleMouseDown);
@@ -157,7 +158,7 @@ export const Absolute = () => {
       canvas.removeEventListener('click', disableEvent);
       canvas.removeEventListener('contextmenu', disableEvent);
     };
-  }, [resolution, scrollDirection, scrollInterval, mouseJigglerMode, setMouseLastMoveTime]);
+  }, [resolution, scrollDirection, scrollInterval, mouseJigglerMode, setMouseLastMoveTime, videoRotate]);
 
   // disable default events
   function disableEvent(event: any) {
