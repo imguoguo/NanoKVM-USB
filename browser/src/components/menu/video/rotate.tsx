@@ -9,7 +9,12 @@ import * as storage from '@/libs/storage';
 
 export const Rotate = (): ReactElement => {
   const { t } = useTranslation()
-  const rotates = [0, 90, 180, 270];
+  const rotates = {
+    "0": t('video.noRotation'),
+    "90": "90°",
+    "180": "180°",
+    "270": "270°"
+  };
 
   const setVideoRotate = useSetAtom(videoRotateAtom)
 
@@ -20,14 +25,14 @@ export const Rotate = (): ReactElement => {
 
   const content = (
     <>
-      {rotates.map((rotate) => (
+      {Object.entries(rotates).map(([degree, label]) => (
         <div
-          key={rotate}
+          key={degree}
           className={
             'flex cursor-pointer select-none items-center space-x-1 rounded px-3 py-1.5 hover:bg-neutral-700/60'}
-          onClick={() => updateRotate(rotate)}
+          onClick={() => updateRotate(parseInt(degree))}
         >
-          <span className="w-[32px]">{rotate}°</span>
+          <span>{label}</span>
         </div>
       ))}
     </>
