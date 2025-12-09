@@ -41,7 +41,7 @@ export const Relative = () => {
 
   // listen mouse events
   useEffect(() => {
-    const canvas = document.getElementById('video');
+    const canvas = document.getElementById('video-canvas');
     if (!canvas) return;
 
     document.addEventListener('pointerlockchange', handlePointerLockChange);
