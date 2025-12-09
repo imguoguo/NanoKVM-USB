@@ -4,9 +4,6 @@ import clsx from 'clsx';
 import { useAtomValue, useSetAtom, useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
-
-
-
 import { DeviceModal } from '@/components/device-modal';
 import { Keyboard } from '@/components/keyboard';
 import { Menu } from '@/components/menu';
@@ -18,7 +15,6 @@ import { mouseStyleAtom } from '@/jotai/mouse.ts';
 import { camera } from '@/libs/camera';
 import { device } from '@/libs/device';
 import * as storage from '@/libs/storage';
-// import { setVideoRotate, setVideoScale } from '@/libs/storage';
 import type { Resolution } from '@/types.ts';
 
 const App = () => {
@@ -67,18 +63,7 @@ const App = () => {
     requestRef.current = requestAnimationFrame(renderFrame);
   }, [videoRotate]);
 
-  const handleVideoMetadata = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.play().catch((e) => console.error('Auto-play failed:', e));
-
-    if (!requestRef.current) {
-      renderFrame();
-    }
-  };
-
-  useEffect(() => {
+  const setCanvas = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
@@ -95,8 +80,13 @@ const App = () => {
     if (requestRef.current) {
       cancelAnimationFrame(requestRef.current);
     }
+
     renderFrame();
-  }, [videoRotate, renderFrame]);
+  }
+
+  useEffect(() => {
+    setCanvas();
+  }, [videoRotate]);
 
   useEffect(() => {
     const resolution = storage.getVideoResolution();
@@ -187,19 +177,15 @@ const App = () => {
         ref={videoRef}
         autoPlay
         playsInline
-        onLoadedMetadata={handleVideoMetadata}
+        onLoadedMetadata={setCanvas}
       />
 
       <canvas
         id="video-canvas"
         ref={canvasRef}
-        className={clsx('block min-h-[480px] min-w-[640px] select-none', mouseStyle)}
+        className={clsx('block min-h-[480px] min-w-[640px] select-none origin-center max-w-full max-h-full object-scale-down', mouseStyle)}
         style={{
           transform: `scale(${videoScale})`,
-          transformOrigin: 'center',
-          maxWidth: '100%',
-          maxHeight: '100%',
-          objectFit: 'scale-down'
         }}
       />
 
