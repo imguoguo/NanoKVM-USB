@@ -66,13 +66,6 @@ export const Device = (): ReactElement => {
       if (!video) return
       video.srcObject = camera.getStream()
 
-      // Start playback explicitly
-      try {
-        await video.play()
-      } catch (err) {
-        console.error('video.play() failed:', err)
-      }
-
       setVideoDeviceId(device.videoId)
       storage.setVideoDevice(device.videoId)
     } finally {
@@ -81,12 +74,12 @@ export const Device = (): ReactElement => {
   }
 
   const content = (
-    <div className="max-h-[350px] overflow-y-auto">
+    <>
       {devices.map((device) => (
         <div
           key={device.videoId}
           className={clsx(
-            'max-w-[320px] cursor-pointer truncate rounded px-2 py-1.5 hover:bg-neutral-700/50',
+            'max-w-[320px] cursor-pointer truncate rounded px-2 py-1.5 hover:bg-neutral-700/60',
             device.videoId === videoDeviceId ? 'text-blue-500' : 'text-white'
           )}
           onClick={() => selectDevice(device)}
@@ -94,14 +87,14 @@ export const Device = (): ReactElement => {
           {device.videoName}
         </div>
       ))}
-    </div>
+    </>
   )
 
   return (
     <Popover content={content} placement="rightTop" arrow={false} align={{ offset: [13, 0] }}>
       <div className="flex h-[32px] cursor-pointer items-center space-x-2 rounded px-3 text-neutral-300 hover:bg-neutral-700/50">
         <VideoIcon size={18} />
-        <span className="select-none text-sm">{t('video.device')}</span>
+        <span className="text-sm select-none">{t('video.device')}</span>
       </div>
     </Popover>
   )
