@@ -102,8 +102,8 @@ export const Relative = (): ReactElement => {
     async function handleMouseMove(event: MouseEvent): Promise<void> {
       disableEvent(event)
 
-      const x = event.movementX || 0
-      const y = event.movementY || 0
+      const x = event.movementX || (event as any).mozMovementX || (event as any).webkitMovementX || 0
+      const y = event.movementY || (event as any).mozMovementY || (event as any).webkitMovementY || 0
       if (x === 0 && y === 0) return
 
       await send(Math.abs(x) < 10 ? x * 2 : x, Math.abs(y) < 10 ? y * 2 : y, 0)
