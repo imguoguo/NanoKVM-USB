@@ -102,14 +102,14 @@ export const Resolution = (): ReactElement => {
         <div
           key={res.width}
           className={clsx(
-            'flex cursor-pointer items-center space-x-1 rounded px-4 py-1.5 select-none hover:bg-neutral-700/50',
+            'flex cursor-pointer select-none items-center space-x-1 rounded px-4 py-1.5 hover:bg-neutral-700/60',
             resolution.width === res.width && resolution.height === res.height
               ? 'text-blue-500'
               : 'text-white'
           )}
           onClick={() => updateResolution(res.width, res.height)}
         >
-          <span className="w-[32px]">{res.width}</span>
+          <span className="flex w-[32px]">{res.width}</span>
           <span>x</span>
           <span className="w-[32px]">{res.height}</span>
         </div>
@@ -118,7 +118,7 @@ export const Resolution = (): ReactElement => {
       <Divider style={{ margin: '5px 0 5px 0' }} />
 
       <div
-        className="flex cursor-pointer items-center justify-between space-x-3 rounded px-4 py-1.5 text-sm select-none hover:bg-neutral-700/50"
+        className="flex cursor-pointer select-none items-center justify-between space-x-3 rounded px-4 py-1.5 text-sm hover:bg-neutral-700/60"
         onClick={showModal}
       >
         <span>{t('video.customResolution')}</span>
@@ -133,7 +133,7 @@ export const Resolution = (): ReactElement => {
         <div
           key={res.width}
           className={clsx(
-            'flex cursor-pointer items-center space-x-1 rounded px-4 py-1.5 select-none hover:bg-neutral-700/50',
+            'flex cursor-pointer select-none items-center space-x-1 rounded px-4 py-1.5 hover:bg-neutral-700/60',
             resolution.width === res.width && resolution.height === res.height
               ? 'text-blue-500'
               : 'text-white'
