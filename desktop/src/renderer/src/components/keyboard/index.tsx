@@ -38,7 +38,7 @@ export const Keyboard = (): ReactElement => {
       }
     }
 
-    await sendKeyData(event)
+    await sendKeyData()
   }
 
   // release button
@@ -55,11 +55,15 @@ export const Keyboard = (): ReactElement => {
       }
     }
 
-    await sendKeyData(event)
+    await sendKeyData()
   }
 
-  async function sendKeyData(event: KeyboardEvent) {
-    const modifiers = Modifiers.getModifiers(event, pressedModifiersRef.current)
+  async function sendKeyData() {
+    const modifiers = new Modifiers()
+    pressedModifiersRef.current.forEach((code) => {
+      modifiers.setModifier(code)
+    })
+
     const keys = [
       0x00,
       0x00,
