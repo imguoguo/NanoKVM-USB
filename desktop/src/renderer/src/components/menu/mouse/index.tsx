@@ -21,7 +21,7 @@ import { Style } from './style'
 
 export const Mouse = (): ReactElement => {
   const [mouseStyle, setMouseStyle] = useAtom(mouseStyleAtom)
-  const setMouseMode = useSetAtom(mouseModeAtom)
+  const [mouseMode, setMouseMode] = useAtom(mouseModeAtom)
   const setScrollDirection = useSetAtom(scrollDirectionAtom)
   const setScrollInterval = useSetAtom(scrollIntervalAtom)
   const setMouseJigglerMode = useSetAtom(mouseJigglerModeAtom)
@@ -29,13 +29,17 @@ export const Mouse = (): ReactElement => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
   useEffect(() => {
+    initMouse()
+  }, [])
+
+  function initMouse() {
     const style = storage.getMouseStyle()
     if (style && style !== mouseStyle) {
       setMouseStyle(style)
     }
 
     const mode = storage.getMouseMode()
-    if (mode) {
+    if (mode && mode !== mouseMode) {
       setMouseMode(mode)
     }
 
@@ -48,10 +52,11 @@ export const Mouse = (): ReactElement => {
     if (interval) {
       setScrollInterval(interval)
     }
+
     const jiggler = storage.getMouseJigglerMode()
     mouseJiggler.setMode(jiggler)
     setMouseJigglerMode(jiggler)
-  }, [])
+  }
 
   const content = (
     <div className="flex flex-col space-y-0.5">
