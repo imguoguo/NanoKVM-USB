@@ -76,11 +76,11 @@ jobs:
         include:
           - os: ubuntu-latest
             target: linux
-            build_script: ${{ github.event_name == 'workflow_dispatch' && 'build:linux-all' || 'build:linux' }}
+            build_script: ${{ github.event_name == 'workflow_dispatch' && 'build:linux-full' || 'build:linux' }}
             artifact_name: desktop-linux
           - os: windows-latest
             target: windows
-            build_script: ${{ github.event_name == 'workflow_dispatch' && 'build:win-all' || 'build:win' }}
+            build_script: ${{ github.event_name == 'workflow_dispatch' && 'build:win-full' || 'build:win' }}
             artifact_name: desktop-windows
     defaults:
       run:
