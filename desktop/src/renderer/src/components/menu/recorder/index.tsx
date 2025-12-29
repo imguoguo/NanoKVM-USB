@@ -7,6 +7,7 @@ import { camera } from '@renderer/libs/camera'
 export const Recorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [elapsedMs, setElapsedMs] = useState(0);
+
   const mediaRecorderRef = useRef<MediaRecorder>();
   const fileWritableRef = useRef<FileSystemWritableFileStream | null>(null);
   const timerRef = useRef<number | null>(null);
@@ -58,8 +59,7 @@ export const Recorder = () => {
         ]
       });
 
-      const writable = await handle.createWritable();
-      fileWritableRef.current = writable;
+      fileWritableRef.current = await handle.createWritable();
 
       const recorder = new MediaRecorder(stream, {
         mimeType: 'video/webm'
