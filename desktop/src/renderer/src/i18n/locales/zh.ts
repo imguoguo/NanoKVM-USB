@@ -38,7 +38,7 @@ const zh = {
         cancel: '取消'
       }
     },
-    kkeyboard: {
+    keyboard: {
       paste: '粘贴',
       virtualKeyboard: '虚拟键盘',
       shortcut: {

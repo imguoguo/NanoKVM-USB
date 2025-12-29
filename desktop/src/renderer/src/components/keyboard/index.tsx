@@ -3,9 +3,10 @@ import { Modifiers } from '@renderer/libs/device/keyboard'
 import { KeyboardCodes } from '@renderer/libs/keyboard'
 import { IpcEvents } from '@common/ipc-events'
 
+const MAX_SIMULTANEOUS_KEYS = 6
+const ModifierKeys = new Set(['Control', 'Shift', 'Alt', 'Meta'])
+
 export const Keyboard = (): ReactElement => {
-  const MAX_SIMULTANEOUS_KEYS = 4
-  const modifierKeys = new Set(['Control', 'Shift', 'Alt', 'Meta'])
   const pressedKeysRef = useRef<Set<number>>(new Set())
   const pressedModifiersRef = useRef<Set<string>>(new Set())
 
@@ -13,10 +14,14 @@ export const Keyboard = (): ReactElement => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
+    window.addEventListener('blur', releaseAllKeys)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
+      window.removeEventListener('blur', releaseAllKeys)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [])
 
@@ -25,7 +30,7 @@ export const Keyboard = (): ReactElement => {
     event.preventDefault()
     event.stopPropagation()
 
-    if (modifierKeys.has(event.key)) {
+    if (ModifierKeys.has(event.key)) {
       pressedModifiersRef.current.add(event.code)
     } else {
       const keyCode = KeyboardCodes.get(event.code)
@@ -38,7 +43,7 @@ export const Keyboard = (): ReactElement => {
       }
     }
 
-    await sendKeyData(event)
+    await sendKeyData()
   }
 
   // release button
@@ -46,7 +51,7 @@ export const Keyboard = (): ReactElement => {
     event.preventDefault()
     event.stopPropagation()
 
-    if (modifierKeys.has(event.key)) {
+    if (ModifierKeys.has(event.key)) {
       pressedModifiersRef.current.delete(event.code)
     } else {
       const commonKeyCode = KeyboardCodes.get(event.code)
@@ -55,14 +60,38 @@ export const Keyboard = (): ReactElement => {
       }
     }
 
-    await sendKeyData(event)
+    await sendKeyData()
   }
 
-  async function sendKeyData(event: KeyboardEvent) {
-    const modifiers = Modifiers.getModifiers(event, pressedModifiersRef.current)
+  // release all keys when page loses focus
+  async function releaseAllKeys() {
+    if (pressedKeysRef.current.size === 0 && pressedModifiersRef.current.size === 0) {
+      return
+    }
+
+    const modifiers = new Modifiers()
+    const keys = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+    await window.electron.ipcRenderer.invoke(IpcEvents.SEND_KEYBOARD, modifiers.encode(), keys)
+
+    pressedKeysRef.current.clear()
+    pressedModifiersRef.current.clear()
+  }
+
+  // release all keys when page is hidden
+  function handleVisibilityChange() {
+    if (document.hidden) {
+      releaseAllKeys()
+    }
+  }
+
+  // send keyboard data
+  async function sendKeyData() {
+    const modifiers = new Modifiers()
+    pressedModifiersRef.current.forEach((code) => {
+      modifiers.setModifier(code)
+    })
+
     const keys = [
-      0x00,
-      0x00,
       ...Array.from(pressedKeysRef.current),
       ...new Array(MAX_SIMULTANEOUS_KEYS - pressedKeysRef.current.size).fill(0x00)
     ]
