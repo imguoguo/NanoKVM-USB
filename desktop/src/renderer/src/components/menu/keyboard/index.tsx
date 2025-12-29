@@ -3,8 +3,8 @@ import { Popover } from 'antd'
 import { KeyboardIcon } from 'lucide-react'
 
 import { Paste } from './paste'
-import { VirtualKeyboard } from './virtual-keyboard';
-import { KeyboardShortcutsMenu } from './shortcuts-menu';
+import { Shortcuts } from './shortcuts'
+import { VirtualKeyboard } from './virtual-keyboard'
 
 export const Keyboard = (): ReactElement => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -13,7 +13,7 @@ export const Keyboard = (): ReactElement => {
     <div className="flex flex-col space-y-0.5">
       <Paste />
       <VirtualKeyboard />
-      <KeyboardShortcutsMenu />
+      <Shortcuts />
     </div>
   )
 
