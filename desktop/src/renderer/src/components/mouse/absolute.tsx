@@ -1,11 +1,11 @@
 import { ReactElement, useEffect, useRef } from 'react'
 import { useAtomValue } from 'jotai'
 
-import { IpcEvents } from '@common/ipc-events'
-import { resolutionAtom, videoRotateAtom } from '@renderer/jotai/device'
-import { scrollDirectionAtom, scrollIntervalAtom } from '@renderer/jotai/mouse'
-import { Key } from '@renderer/libs/device/mouse'
-import { mouseJiggler } from '@renderer/libs/mouse-jiggler'
+import { IpcEvents } from '@common/ipc-events.ts'
+import { resolutionAtom, videoRotateAtom } from '@renderer/jotai/device.ts'
+import { scrollDirectionAtom, scrollIntervalAtom } from '@renderer/jotai/mouse.ts'
+import { Key } from '@renderer/libs/device/mouse.ts'
+import { mouseJiggler } from '@renderer/libs/mouse-jiggler/index.ts'
 
 export const Absolute = (): ReactElement => {
   const resolution = useAtomValue(resolutionAtom)

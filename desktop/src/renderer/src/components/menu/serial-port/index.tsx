@@ -5,9 +5,9 @@ import { useAtom } from 'jotai'
 import { CpuIcon, LoaderCircleIcon, RadioIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { IpcEvents } from '@common/ipc-events'
-import { serialPortAtom, baudRateAtom } from '@renderer/jotai/device'
-import * as storage from '@renderer/libs/storage'
+import { IpcEvents } from '@common/ipc-events.ts'
+import { serialPortAtom, baudRateAtom } from '@renderer/jotai/device.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const SerialPort = (): ReactElement => {
   const { t } = useTranslation()

@@ -4,7 +4,7 @@ import { Divider } from 'antd'
 import { BookOpenIcon, MessageSquareIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { IpcEvents } from '@common/ipc-events'
+import { IpcEvents } from '@common/ipc-events.ts'
 import icon from '@renderer/assets/images/icon.png'
 
 export const About = (): ReactElement => {

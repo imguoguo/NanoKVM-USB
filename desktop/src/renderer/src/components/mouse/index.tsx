@@ -1,10 +1,10 @@
 import { ReactElement } from 'react'
 import { useAtomValue } from 'jotai'
 
-import { mouseModeAtom } from '@renderer/jotai/mouse'
+import { mouseModeAtom } from '@renderer/jotai/mouse.ts'
 
-import { Absolute } from './absolute'
-import { Relative } from './relative'
+import { Absolute } from './absolute.tsx'
+import { Relative } from './relative.tsx'
 
 export const Mouse = (): ReactElement => {
   const mouseMode = useAtomValue(mouseModeAtom)

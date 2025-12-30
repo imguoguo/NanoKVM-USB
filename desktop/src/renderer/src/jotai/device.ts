@@ -1,6 +1,6 @@
 import { atom } from 'jotai'
 
-import { Resolution } from '@renderer/types'
+import { Resolution } from '@renderer/types.ts'
 
 type VideoState = 'disconnected' | 'connecting' | 'connected'
 type SerialState = 'notSupported' | 'disconnected' | 'connecting' | 'connected'

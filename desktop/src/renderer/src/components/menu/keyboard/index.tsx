@@ -2,9 +2,9 @@ import { ReactElement, useState } from 'react'
 import { Popover } from 'antd'
 import { KeyboardIcon } from 'lucide-react'
 
-import { Paste } from './paste'
-import { Shortcuts } from './shortcuts'
-import { VirtualKeyboard } from './virtual-keyboard'
+import { Paste } from './paste.tsx'
+import { Shortcuts } from './shortcuts/index.tsx'
+import { VirtualKeyboard } from './virtual-keyboard.tsx'
 
 export const Keyboard = (): ReactElement => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)

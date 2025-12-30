@@ -2,10 +2,10 @@ import { ReactElement } from 'react'
 import { Popover } from 'antd'
 import { MonitorIcon } from 'lucide-react'
 
-import { Device } from './device'
-import { Resolution } from './resolution'
-import { Rotate } from './rotate'
-import { Scale } from './scale'
+import { Device } from './device.tsx'
+import { Resolution } from './resolution.tsx'
+import { Rotate } from './rotate.tsx'
+import { Scale } from './scale.tsx'
 
 export const Video = (): ReactElement => {
   const content = (

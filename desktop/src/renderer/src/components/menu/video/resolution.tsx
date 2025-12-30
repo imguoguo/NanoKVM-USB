@@ -5,11 +5,11 @@ import { useAtom, useSetAtom } from 'jotai'
 import { RatioIcon, Trash2Icon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { resolutionAtom } from '@renderer/jotai/device'
-import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard'
-import { camera } from '@renderer/libs/camera'
-import * as storage from '@renderer/libs/storage'
-import type { Resolution as VideoResolution } from '@renderer/types'
+import { resolutionAtom } from '@renderer/jotai/device.ts'
+import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard.ts'
+import { camera } from '@renderer/libs/camera/index.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
+import type { Resolution as VideoResolution } from '@renderer/types.ts'
 
 export const Resolution = (): ReactElement => {
   const { t } = useTranslation()

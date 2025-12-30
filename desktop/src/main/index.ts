@@ -4,7 +4,7 @@ import { app, BrowserWindow, shell, session } from 'electron'
 import log from 'electron-log/main'
 
 import icon from '../../resources/icon.png?asset'
-import * as events from './events'
+import * as events from './events/index.ts'
 
 console.error = log.error
 

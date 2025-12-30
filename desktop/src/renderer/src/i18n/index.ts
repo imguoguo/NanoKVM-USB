@@ -2,7 +2,7 @@ import i18n from 'i18next'
 import type { Resource } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import { getLanguage } from '@renderer/libs/storage'
+import { getLanguage } from '@renderer/libs/storage/index.ts'
 
 function getResources(): Resource {
   const resources: Resource = {}

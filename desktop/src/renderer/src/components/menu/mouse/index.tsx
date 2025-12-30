@@ -9,15 +9,15 @@ import {
   mouseStyleAtom,
   scrollDirectionAtom,
   scrollIntervalAtom
-} from '@renderer/jotai/mouse'
-import { mouseJiggler } from '@renderer/libs/mouse-jiggler'
-import * as storage from '@renderer/libs/storage'
+} from '@renderer/jotai/mouse.ts'
+import { mouseJiggler } from '@renderer/libs/mouse-jiggler/index.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
-import { Direction } from './direction'
-import { Jiggler } from './jiggler'
-import { Mode } from './mode'
-import { Speed } from './speed'
-import { Style } from './style'
+import { Direction } from './direction.tsx'
+import { Jiggler } from './jiggler.tsx'
+import { Mode } from './mode.tsx'
+import { Speed } from './speed.tsx'
+import { Style } from './style.tsx'
 
 export const Mouse = (): ReactElement => {
   const [mouseStyle, setMouseStyle] = useAtom(mouseStyleAtom)

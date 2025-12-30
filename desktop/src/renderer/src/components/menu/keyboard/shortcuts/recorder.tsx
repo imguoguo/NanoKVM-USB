@@ -4,12 +4,12 @@ import { useSetAtom } from 'jotai'
 import { KeyboardIcon, Trash2Icon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { Kbd, KbdGroup } from '@renderer/components/ui/kbd'
-import { ScrollArea } from '@renderer/components/ui/scroll-area'
-import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard'
-import { modifierKeys } from '@renderer/libs/device/keyboard'
+import { Kbd, KbdGroup } from '@renderer/components/ui/kbd.tsx'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard.ts'
+import { modifierKeys } from '@renderer/libs/device/keyboard.ts'
 
-import { KeyInfo, Shortcut } from './types'
+import { KeyInfo, Shortcut } from './types.ts'
 
 const MAX_KEYS = 6
 

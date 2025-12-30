@@ -1,7 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron'
 import { autoUpdater, UpdateInfo } from 'electron-updater'
 
-import { IpcEvents } from '../../common/ipc-events'
+import { IpcEvents } from '../../common/ipc-events.ts'
 
 autoUpdater.autoDownload = false
 autoUpdater.forceDevUpdateConfig = true

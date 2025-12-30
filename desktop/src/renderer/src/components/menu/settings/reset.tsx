@@ -2,7 +2,7 @@ import { ReactElement, useState } from 'react'
 import { Button, Modal } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import * as storage from '@renderer/libs/storage'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const Reset = (): ReactElement => {
   const { t } = useTranslation()

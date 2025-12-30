@@ -1,5 +1,5 @@
-import type { Resolution } from '@renderer/types'
-import { getWithExpiry, setWithExpiry } from './expiry'
+import type { Resolution } from '@renderer/types.ts'
+import { getWithExpiry, setWithExpiry } from './expiry.ts'
 
 const LANGUAGE_KEY = 'nanokvm-usb-language'
 const VIDEO_DEVICE_ID_KEY = 'nanokvm-usb-video-device-id'

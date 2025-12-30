@@ -5,8 +5,8 @@ import { useAtom } from 'jotai'
 import { ArrowDownUpIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { scrollDirectionAtom } from '@renderer/jotai/mouse'
-import * as storage from '@renderer/libs/storage'
+import { scrollDirectionAtom } from '@renderer/jotai/mouse.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const Direction = (): ReactElement => {
   const { t } = useTranslation()

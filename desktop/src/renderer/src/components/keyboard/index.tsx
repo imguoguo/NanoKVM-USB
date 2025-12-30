@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useRef } from 'react'
-import { Modifiers } from '@renderer/libs/device/keyboard'
-import { KeyboardCodes } from '@renderer/libs/keyboard'
-import { IpcEvents } from '@common/ipc-events'
+import { Modifiers } from '@renderer/libs/device/keyboard.ts'
+import { KeyboardCodes } from '@renderer/libs/keyboard/index.ts'
+import { IpcEvents } from '@common/ipc-events.ts'
 
 const MAX_SIMULTANEOUS_KEYS = 6
 const ModifierKeys = new Set(['Control', 'Shift', 'Alt', 'Meta'])

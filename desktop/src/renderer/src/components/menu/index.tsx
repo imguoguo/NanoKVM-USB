@@ -4,16 +4,16 @@ import clsx from 'clsx'
 import { useAtomValue } from 'jotai'
 import { MenuIcon, XIcon } from 'lucide-react'
 
-import { serialStateAtom } from '@renderer/jotai/device'
-import * as storage from '@renderer/libs/storage'
+import { serialStateAtom } from '@renderer/jotai/device.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
-import { Fullscreen } from './fullscreen'
-import { Keyboard } from './keyboard'
-import { Mouse } from './mouse'
-import { SerialPort } from './serial-port'
-import { Settings } from './settings'
-import { Video } from './video'
-import { Recorder } from './recorder'
+import { Fullscreen } from './fullscreen/index.tsx'
+import { Keyboard } from './keyboard/index.tsx'
+import { Mouse } from './mouse/index.tsx'
+import { SerialPort } from './serial-port/index.tsx'
+import { Settings } from './settings/index.tsx'
+import { Video } from './video/index.tsx'
+import { Recorder } from './recorder/index.tsx'
 
 export const Menu = (): ReactElement => {
   const serialState = useAtomValue(serialStateAtom)

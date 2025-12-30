@@ -2,9 +2,9 @@ import { ReactElement, useState } from 'react'
 import { ClipboardIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { CharCodes, ShiftChars } from '@renderer/libs/keyboard'
-import { Modifiers } from '@renderer/libs/device/keyboard';
-import { IpcEvents } from '@common/ipc-events'
+import { CharCodes, ShiftChars } from '@renderer/libs/keyboard/index.ts'
+import { Modifiers } from '@renderer/libs/device/keyboard.ts'
+import { IpcEvents } from '@common/ipc-events.ts'
 
 export const Paste = (): ReactElement => {
   const { t } = useTranslation()

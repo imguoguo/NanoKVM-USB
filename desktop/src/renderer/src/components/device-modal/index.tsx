@@ -3,10 +3,10 @@ import { Modal } from 'antd'
 import { useAtomValue } from 'jotai'
 import { useTranslation } from 'react-i18next'
 
-import { serialStateAtom, videoStateAtom } from '@renderer/jotai/device'
+import { serialStateAtom, videoStateAtom } from '@renderer/jotai/device.ts'
 
-import { SerialPort } from './serial-port'
-import { Video } from './video'
+import { SerialPort } from './serial-port.tsx'
+import { Video } from './video.tsx'
 
 export const DeviceModal = (): ReactElement => {
   const { t } = useTranslation()

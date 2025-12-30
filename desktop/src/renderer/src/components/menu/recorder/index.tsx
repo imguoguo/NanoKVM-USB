@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Video } from 'lucide-react';
 
-import { camera } from '@renderer/libs/camera'
+import { camera } from '@renderer/libs/camera/index.ts'
 
 export const Recorder = () => {
   const [isRecording, setIsRecording] = useState(false);

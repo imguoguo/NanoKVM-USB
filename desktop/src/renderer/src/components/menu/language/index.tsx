@@ -4,8 +4,8 @@ import clsx from 'clsx'
 import { LanguagesIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import languages from '@renderer/i18n/languages'
-import { setLanguage } from '@renderer/libs/storage'
+import languages from '@renderer/i18n/languages.ts'
+import { setLanguage } from '@renderer/libs/storage/index.ts'
 
 export const Language = (): ReactElement => {
   const { i18n } = useTranslation()

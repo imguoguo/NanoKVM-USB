@@ -1,6 +1,6 @@
-import { CmdEvent, CmdPacket, InfoPacket } from './proto'
-import { SerialPort } from './serial-port'
-import { intToByte, intToLittleEndianList } from './utils'
+import { CmdEvent, CmdPacket, InfoPacket } from './proto.ts'
+import { SerialPort } from './serial-port.ts'
+import { intToByte, intToLittleEndianList } from './utils.ts'
 
 export class Device {
   addr: number

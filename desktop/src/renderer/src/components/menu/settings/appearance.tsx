@@ -3,9 +3,9 @@ import { Divider, Select, Switch } from 'antd'
 import { LanguagesIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import languages from '@renderer/i18n/languages'
-import { setLanguage } from '@renderer/libs/storage'
-import * as storage from '@renderer/libs/storage'
+import languages from '@renderer/i18n/languages.ts'
+import { setLanguage } from '@renderer/libs/storage/index.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const Appearance = (): ReactElement => {
   const { t, i18n } = useTranslation()

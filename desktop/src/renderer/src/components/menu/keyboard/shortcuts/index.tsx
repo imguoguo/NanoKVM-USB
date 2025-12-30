@@ -3,12 +3,12 @@ import { Divider, Popover } from 'antd'
 import { CommandIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { ScrollArea } from '@renderer/components/ui/scroll-area'
-import * as storage from '@renderer/libs/storage'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import * as storage from '@renderer/libs/storage/index.ts'
 
-import { Recorder } from './recorder'
-import { Shortcut } from './shortcut'
-import type { Shortcut as ShortcutInterface } from './types'
+import { Recorder } from './recorder.tsx'
+import { Shortcut } from './shortcut.tsx'
+import type { Shortcut as ShortcutInterface } from './types.ts'
 
 export const Shortcuts = () => {
   const { t } = useTranslation()

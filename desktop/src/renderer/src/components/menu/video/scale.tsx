@@ -5,8 +5,8 @@ import { useAtom } from 'jotai'
 import { PercentIcon, ScalingIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { videoScaleAtom } from '@renderer/jotai/device'
-import * as storage from '@renderer/libs/storage'
+import { videoScaleAtom } from '@renderer/jotai/device.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 const ScaleList = [
   { label: '200', value: 2 },

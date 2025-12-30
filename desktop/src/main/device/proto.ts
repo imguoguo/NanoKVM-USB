@@ -1,4 +1,4 @@
-import { getBit } from './utils'
+import { getBit } from './utils.ts'
 
 export enum CmdEvent {
   GET_INFO = 0x01,

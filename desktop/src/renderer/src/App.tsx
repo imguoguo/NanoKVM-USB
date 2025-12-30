@@ -5,24 +5,24 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from 'react-responsive'
 
-import { IpcEvents } from '@common/ipc-events'
-import { DeviceModal } from '@renderer/components/device-modal'
-import { Keyboard } from '@renderer/components/keyboard'
-import { Menu } from '@renderer/components/menu'
-import { Mouse } from '@renderer/components/mouse'
-import { VirtualKeyboard } from '@renderer/components/virtual-keyboard'
+import { IpcEvents } from '@common/ipc-events.ts'
+import { DeviceModal } from '@renderer/components/device-modal/index.tsx'
+import { Keyboard } from '@renderer/components/keyboard/index.tsx'
+import { Menu } from '@renderer/components/menu/index.tsx'
+import { Mouse } from '@renderer/components/mouse/index.tsx'
+import { VirtualKeyboard } from '@renderer/components/virtual-keyboard/index.tsx'
 import {
   resolutionAtom,
   serialStateAtom,
   videoRotateAtom,
   videoScaleAtom,
   videoStateAtom
-} from '@renderer/jotai/device'
-import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard'
-import { mouseStyleAtom } from '@renderer/jotai/mouse'
-import { camera } from '@renderer/libs/camera'
-import * as storage from '@renderer/libs/storage'
-import type { Resolution } from '@renderer/types'
+} from '@renderer/jotai/device.ts'
+import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard.ts'
+import { mouseStyleAtom } from '@renderer/jotai/mouse.ts'
+import { camera } from '@renderer/libs/camera/index.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
+import type { Resolution } from '@renderer/types.ts'
 
 type State = 'loading' | 'success' | 'failed'
 

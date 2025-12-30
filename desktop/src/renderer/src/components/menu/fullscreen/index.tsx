@@ -1,7 +1,7 @@
 import { ReactElement, useState } from 'react'
 import { MaximizeIcon, MinimizeIcon } from 'lucide-react'
 
-import { IpcEvents } from '@common/ipc-events'
+import { IpcEvents } from '@common/ipc-events.ts'
 
 export const Fullscreen = (): ReactElement => {
   const [isFullscreen, setIsFullscreen] = useState(false)

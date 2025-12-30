@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain, shell, systemPreferences } from 'electron'
 import type { IpcMainEvent, OpenExternalOptions } from 'electron'
 
-import { IpcEvents } from '../../common/ipc-events'
+import { IpcEvents } from '../../common/ipc-events.ts'
 
 export function registerApp(): void {
   ipcMain.handle(IpcEvents.GET_APP_VERSION, getAppVersion)

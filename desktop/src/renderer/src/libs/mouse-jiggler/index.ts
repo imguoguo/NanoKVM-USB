@@ -1,5 +1,5 @@
-import { IpcEvents } from '@common/ipc-events'
-import { Key } from '@renderer/libs/device/mouse'
+import { IpcEvents } from '@common/ipc-events.ts'
+import { Key } from '@renderer/libs/device/mouse.ts'
 
 const MOUSE_JIGGLER_INTERVAL = 15_000
 const EMPTY_KEY: Key = new Key(false, false, false)

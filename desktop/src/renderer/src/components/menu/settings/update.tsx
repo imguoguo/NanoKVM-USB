@@ -3,7 +3,7 @@ import { LoadingOutlined, RocketOutlined, SmileOutlined } from '@ant-design/icon
 import { Button, Divider, Progress, Result, Spin } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { IpcEvents } from '@common/ipc-events'
+import { IpcEvents } from '@common/ipc-events.ts'
 
 type Status = 'loading' | 'latest' | 'outdated' | 'downloading' | 'installing' | 'error'
 

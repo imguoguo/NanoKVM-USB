@@ -5,9 +5,9 @@ import { useAtom } from 'jotai'
 import { MousePointerClickIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { mouseJigglerModeAtom } from '@renderer/jotai/mouse'
-import { mouseJiggler } from '@renderer/libs/mouse-jiggler'
-import * as storage from '@renderer/libs/storage'
+import { mouseJigglerModeAtom } from '@renderer/jotai/mouse.ts'
+import { mouseJiggler } from '@renderer/libs/mouse-jiggler/index.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const Jiggler = (): ReactElement => {
   const { t } = useTranslation()

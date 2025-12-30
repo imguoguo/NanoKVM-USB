@@ -5,8 +5,8 @@ import { useAtom } from 'jotai'
 import { RotateCcwIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { videoRotateAtom } from '@renderer/jotai/device'
-import * as storage from '@renderer/libs/storage'
+import { videoRotateAtom } from '@renderer/jotai/device.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const Rotate = (): ReactElement => {
   const { t } = useTranslation()

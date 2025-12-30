@@ -1,8 +1,8 @@
 import { ipcMain, IpcMainInvokeEvent } from 'electron'
 import { SerialPort } from 'serialport'
 
-import { IpcEvents } from '../../common/ipc-events'
-import { device } from '../device'
+import { IpcEvents } from '../../common/ipc-events.ts'
+import { device } from '../device/index.ts'
 
 export function registerSerialPort(): void {
   ipcMain.handle(IpcEvents.GET_SERIAL_PORTS, getSerialPorts)

@@ -3,9 +3,9 @@ import { Select, Space } from 'antd'
 import { useAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
 
-import { IpcEvents } from '@common/ipc-events'
-import { serialPortAtom, serialStateAtom, baudRateAtom } from '@renderer/jotai/device'
-import * as storage from '@renderer/libs/storage'
+import { IpcEvents } from '@common/ipc-events.ts'
+import { serialPortAtom, serialStateAtom, baudRateAtom } from '@renderer/jotai/device.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 type Option = {
   value: string

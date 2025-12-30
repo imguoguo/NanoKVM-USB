@@ -1,2 +1,2 @@
-export * from './keyboardCodes'
-export * from './charCodes'
+export * from './keyboardCodes.ts'
+export * from './charCodes.ts'

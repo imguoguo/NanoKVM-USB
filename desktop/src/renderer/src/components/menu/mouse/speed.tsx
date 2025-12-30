@@ -4,8 +4,8 @@ import { useAtom } from 'jotai'
 import { GaugeIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { scrollIntervalAtom } from '@renderer/jotai/mouse'
-import * as storage from '@renderer/libs/storage'
+import { scrollIntervalAtom } from '@renderer/jotai/mouse.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 const MAX_INTERVAL = 300
 

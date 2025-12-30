@@ -4,13 +4,13 @@ import clsx from 'clsx'
 import { BadgeInfoIcon, CircleArrowUpIcon, PaletteIcon, SettingsIcon, RotateCcwIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { IpcEvents } from '@common/ipc-events'
-import * as storage from '@renderer/libs/storage'
+import { IpcEvents } from '@common/ipc-events.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
-import { About } from './about'
-import { Appearance } from './appearance'
-import { Update } from './update'
-import { Reset } from './reset'
+import { About } from './about.tsx'
+import { Appearance } from './appearance.tsx'
+import { Update } from './update.tsx'
+import { Reset } from './reset.tsx'
 
 export const Settings = (): ReactElement => {
   const { t } = useTranslation()

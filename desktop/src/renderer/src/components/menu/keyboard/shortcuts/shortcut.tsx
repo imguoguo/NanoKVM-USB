@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
-import { Kbd, KbdGroup } from '@renderer/components/ui/kbd'
-import { Modifiers } from '@renderer/libs/device/keyboard'
-import { KeyboardCodes } from '@renderer/libs/keyboard'
-import { IpcEvents } from '@common/ipc-events'
+import { Kbd, KbdGroup } from '@renderer/components/ui/kbd.tsx'
+import { Modifiers } from '@renderer/libs/device/keyboard.ts'
+import { KeyboardCodes } from '@renderer/libs/keyboard/index.ts'
+import { IpcEvents } from '@common/ipc-events.ts'
 
-import type { Shortcut as ShortcutInterface } from './types'
+import type { Shortcut as ShortcutInterface } from './types.ts'
 
 type ShortcutProps = {
   shortcut: ShortcutInterface

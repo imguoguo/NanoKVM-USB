@@ -3,10 +3,10 @@ import { Select } from 'antd'
 import { useAtom, useAtomValue } from 'jotai'
 import { useTranslation } from 'react-i18next'
 
-import { resolutionAtom, videoDeviceIdAtom, videoStateAtom } from '@renderer/jotai/device'
-import { camera } from '@renderer/libs/camera'
-import * as storage from '@renderer/libs/storage'
-import type { MediaDevice } from '@renderer/types'
+import { resolutionAtom, videoDeviceIdAtom, videoStateAtom } from '@renderer/jotai/device.ts'
+import { camera } from '@renderer/libs/camera/index.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
+import type { MediaDevice } from '@renderer/types.ts'
 
 type VideoProps = {
   setErrMsg: (msg: string) => void

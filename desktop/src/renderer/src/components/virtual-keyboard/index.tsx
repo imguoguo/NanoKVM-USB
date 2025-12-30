@@ -8,9 +8,9 @@ import { Drawer } from 'vaul'
 import 'react-simple-keyboard/build/css/index.css'
 import '@renderer/assets/styles/keyboard.css'
 
-import { isKeyboardOpenAtom } from '@renderer/jotai/keyboard'
-import { Modifiers } from '@renderer/libs/device/keyboard';
-import { KeyboardCodes } from '@renderer/libs/keyboard'
+import { isKeyboardOpenAtom } from '@renderer/jotai/keyboard.ts'
+import { Modifiers } from '@renderer/libs/device/keyboard.ts'
+import { KeyboardCodes } from '@renderer/libs/keyboard/index.ts'
 
 import {
   doubleKeys,
@@ -19,8 +19,8 @@ import {
   keyboardOptions,
   modifierKeys,
   specialKeyMap
-} from './keys'
-import { IpcEvents } from '@common/ipc-events'
+} from './keys.ts'
+import { IpcEvents } from '@common/ipc-events.ts'
 
 type KeyboardProps = {
   isBigScreen: boolean

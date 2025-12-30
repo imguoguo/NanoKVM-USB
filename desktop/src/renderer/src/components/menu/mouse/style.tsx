@@ -5,8 +5,8 @@ import { useAtom } from 'jotai'
 import { EyeOffIcon, HandIcon, MousePointerIcon, PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { mouseStyleAtom } from '@renderer/jotai/mouse'
-import * as storage from '@renderer/libs/storage'
+import { mouseStyleAtom } from '@renderer/jotai/mouse.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const Style = (): ReactElement => {
   const { t } = useTranslation()

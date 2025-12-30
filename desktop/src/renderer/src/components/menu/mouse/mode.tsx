@@ -5,8 +5,8 @@ import { useAtom } from 'jotai'
 import { SquareMousePointerIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { mouseModeAtom } from '@renderer/jotai/mouse'
-import * as storage from '@renderer/libs/storage'
+import { mouseModeAtom } from '@renderer/jotai/mouse.ts'
+import * as storage from '@renderer/libs/storage/index.ts'
 
 export const Mode = (): ReactElement => {
   const { t } = useTranslation()

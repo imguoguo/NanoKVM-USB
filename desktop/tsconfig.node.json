@@ -10,8 +10,10 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "types": [
       "electron-vite/node"
-    ],
+    ]
   }
 }
