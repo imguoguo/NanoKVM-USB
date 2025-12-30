@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { Popover } from 'antd';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
@@ -7,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { mouseModeAtom } from '@/jotai/mouse.ts';
 import * as storage from '@/libs/storage';
 
-export const Mode = () => {
+export const Mode = (): ReactElement => {
   const { t } = useTranslation();
   const [mouseMode, setMouseMode] = useAtom(mouseModeAtom);
 

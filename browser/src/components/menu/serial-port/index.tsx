@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { CpuIcon, Loader2Icon } from 'lucide-react';
 
 import { device } from '@/libs/device';
 
-export const SerialPort = () => {
+export const SerialPort = (): ReactElement => {
   const [isLoading, setIsLoading] = useState(false);
 
-  async function selectSerial() {
+  async function selectSerial(): Promise<void> {
     if (isLoading) return;
     setIsLoading(true);
 

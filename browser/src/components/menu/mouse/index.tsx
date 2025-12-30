@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Divider, Popover } from 'antd';
 import { useAtom, useSetAtom } from 'jotai';
 import { MouseIcon } from 'lucide-react';
@@ -19,7 +19,7 @@ import { Mode } from './mode.tsx';
 import { Speed } from './speed.tsx';
 import { Style } from './style.tsx';
 
-export const Mouse = () => {
+export const Mouse = (): ReactElement => {
   const [mouseStyle, setMouseStyle] = useAtom(mouseStyleAtom);
   const [mouseMode, setMouseMode] = useAtom(mouseModeAtom);
   const setScrollDirection = useSetAtom(scrollDirectionAtom);

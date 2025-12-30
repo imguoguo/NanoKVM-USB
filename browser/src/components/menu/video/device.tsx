@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Popover } from 'antd';
 import clsx from 'clsx';
 import { useAtom, useAtomValue } from 'jotai';
@@ -10,7 +10,7 @@ import { camera } from '@/libs/camera';
 import * as storage from '@/libs/storage';
 import type { MediaDevice } from '@/types';
 
-export const Device = () => {
+export const Device = (): ReactElement => {
   const { t } = useTranslation();
 
   const resolution = useAtomValue(resolutionAtom);
@@ -23,7 +23,7 @@ export const Device = () => {
     getDevices();
   }, []);
 
-  async function getDevices() {
+  async function getDevices(): Promise<void> {
     try {
       const allDevices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = allDevices.filter((device) => device.kind === 'videoinput');
@@ -54,7 +54,7 @@ export const Device = () => {
     }
   }
 
-  async function selectDevice(device: MediaDevice) {
+  async function selectDevice(device: MediaDevice): Promise<void> {
     if (isLoading) return;
     setIsLoading(true);
 

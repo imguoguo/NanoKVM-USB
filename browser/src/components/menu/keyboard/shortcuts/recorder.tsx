@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { Button, Divider, Input, InputRef, Modal } from 'antd';
 import { useSetAtom } from 'jotai';
 import { KeyboardIcon, Trash2Icon } from 'lucide-react';
@@ -52,7 +52,7 @@ interface RecorderProps {
   delShortcut: (index: number) => void;
 }
 
-export const Recorder = ({ shortcuts, addShortcut, delShortcut }: RecorderProps) => {
+export const Recorder = ({ shortcuts, addShortcut, delShortcut }: RecorderProps): ReactElement => {
   const { t } = useTranslation();
   const setIsKeyboardEnable = useSetAtom(isKeyboardEnableAtom);
 

@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Video } from 'lucide-react';
 
 import { camera } from '@/libs/camera';
 
-export const Recorder = () => {
+export const Recorder = (): ReactElement => {
   const [isRecording, setIsRecording] = useState(false);
   const [elapsedMs, setElapsedMs] = useState(0);
 
@@ -35,14 +35,14 @@ export const Recorder = () => {
     };
   }, []);
 
-  const formatElapsed = (ms: number) => {
+  const formatElapsed = (ms: number): string => {
     const totalSeconds = Math.floor(ms / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
-  const handleStartRecording = async () => {
+  const handleStartRecording = async (): Promise<void> => {
     const stream = camera.getStream();
     if (!stream) {
       return;

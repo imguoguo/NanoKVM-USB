@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import { serialStateAtom, videoStateAtom } from '@/jotai/device.ts';
 import { SerialPort } from './serial-port';
 import { Video } from './video';
 
-export const DeviceModal = () => {
+export const DeviceModal = (): ReactElement => {
   const { t } = useTranslation();
 
   const videoState = useAtomValue(videoStateAtom);

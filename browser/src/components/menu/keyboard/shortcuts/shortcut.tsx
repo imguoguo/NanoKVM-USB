@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 
 import { Kbd, KbdGroup } from '@/components/ui/kbd.tsx';
 import { device } from '@/libs/device';
@@ -11,10 +11,10 @@ type ShortcutProps = {
   shortcut: ShortcutInterface;
 };
 
-export const Shortcut = ({ shortcut }: ShortcutProps) => {
+export const Shortcut = ({ shortcut }: ShortcutProps): ReactElement => {
   const [isLoading, setIsLoading] = useState(false);
 
-  async function send() {
+  async function send(): Promise<void> {
     const modifiers = new Modifiers();
     const codes: number[] = [];
 

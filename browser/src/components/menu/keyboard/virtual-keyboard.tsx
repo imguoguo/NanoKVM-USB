@@ -1,10 +1,11 @@
+import { ReactElement } from 'react';
 import { useSetAtom } from 'jotai';
 import { KeyboardIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { isKeyboardOpenAtom } from '@/jotai/keyboard.ts';
 
-export const VirtualKeyboard = () => {
+export const VirtualKeyboard = (): ReactElement => {
   const { t } = useTranslation();
   const setIsKeyboardOpen = useSetAtom(isKeyboardOpenAtom);
 

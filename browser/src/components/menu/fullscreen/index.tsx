@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { MaximizeIcon, MinimizeIcon } from 'lucide-react';
 
-export const Fullscreen = () => {
+export const Fullscreen = (): ReactElement => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {

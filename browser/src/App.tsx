@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { Alert, Result, Spin } from 'antd';
 import clsx from 'clsx';
 import { useAtomValue, useSetAtom, useAtom } from 'jotai';
@@ -17,7 +17,7 @@ import { device } from '@/libs/device';
 import * as storage from '@/libs/storage';
 import type { Resolution } from '@/types.ts';
 
-const App = () => {
+const App = (): ReactElement => {
   const { t } = useTranslation();
   const isBigScreen = useMediaQuery({ minWidth: 850 });
 
@@ -123,7 +123,7 @@ const App = () => {
     };
   }, []);
 
-  async function requestMediaPermissions(resolution?: Resolution) {
+  async function requestMediaPermissions(resolution?: Resolution): Promise<void> {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {

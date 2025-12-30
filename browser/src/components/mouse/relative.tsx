@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import { message } from 'antd';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ import { device } from '@/libs/device';
 import { Key } from '@/libs/device/mouse.ts';
 import { mouseJiggler } from '@/libs/mouse-jiggler';
 
-export const Relative = () => {
+export const Relative = (): ReactElement => {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -144,7 +144,7 @@ export const Relative = () => {
     };
   }, [resolution, scrollDirection, scrollInterval, videoRotate]);
 
-  async function send(x: number, y: number, scroll: number) {
+  async function send(x: number, y: number, scroll: number): Promise<void> {
     await device.sendMouseRelativeData(keyRef.current, x, y, scroll);
   }
 

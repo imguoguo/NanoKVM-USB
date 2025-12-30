@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { ClipboardIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,11 +6,11 @@ import { device } from '@/libs/device';
 import { Modifiers } from '@/libs/device/keyboard.ts';
 import { CharCodes, ShiftChars } from '@/libs/keyboard';
 
-export const Paste = () => {
+export const Paste = (): ReactElement => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function paste() {
+  async function paste(): Promise<void> {
     if (isLoading) return;
     setIsLoading(true);
 
@@ -38,7 +38,7 @@ export const Paste = () => {
     }
   }
 
-  async function send(modifiers: Modifiers, code: number) {
+  async function send(modifiers: Modifiers, code: number): Promise<void> {
     const keys = [code, 0x00, 0x00, 0x00, 0x00, 0x00];
     await device.sendKeyboardData(modifiers, keys);
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Divider, Popover } from 'antd';
 import { CommandIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import { Recorder } from './recorder.tsx';
 import { Shortcut } from './shortcut.tsx';
 import type { Shortcut as ShortcutInterface } from './types.ts';
 
-export const Shortcuts = () => {
+export const Shortcuts = (): ReactElement => {
   const { t } = useTranslation();
 
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ type VideoProps = {
   setErrMsg: (msg: string) => void;
 };
 
-export const Video = ({ setErrMsg }: VideoProps) => {
+export const Video = ({ setErrMsg }: VideoProps): ReactElement => {
   const { t } = useTranslation();
 
   const resolution = useAtomValue(resolutionAtom);

@@ -1,10 +1,11 @@
+import { ReactElement } from 'react';
 import { Popover } from 'antd';
 import { BookIcon, DownloadIcon, SettingsIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { Language } from './language.tsx';
 
-export const Settings = () => {
+export const Settings = (): ReactElement => {
   const { t } = useTranslation();
 
   function openPage(url: string) {

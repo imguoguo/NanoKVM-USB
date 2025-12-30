@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { Popover } from 'antd';
 import clsx from 'clsx';
 import { LanguagesIcon } from 'lucide-react';
@@ -6,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import languages from '@/i18n/languages.ts';
 import { setLanguage } from '@/libs/storage';
 
-export const Language = () => {
+export const Language = (): ReactElement => {
   const { t, i18n } = useTranslation();
 
   function changeLanguage(lng: string) {

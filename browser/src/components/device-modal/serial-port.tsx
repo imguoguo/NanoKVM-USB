@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Button } from 'antd';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ type SerialPortProps = {
   setErrMsg: (msg: string) => void;
 };
 
-export const SerialPort = ({ setErrMsg }: SerialPortProps) => {
+export const SerialPort = ({ setErrMsg }: SerialPortProps): ReactElement => {
   const { t } = useTranslation();
 
   const [serialState, setSerialState] = useAtom(serialStateAtom);
@@ -25,7 +25,7 @@ export const SerialPort = ({ setErrMsg }: SerialPortProps) => {
     setSerialState(state);
   }
 
-  async function selectSerialPort() {
+  async function selectSerialPort(): Promise<void> {
     if (serialState === 'connecting') return;
     setSerialState('connecting');
     setErrMsg('');

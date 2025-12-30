@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Popover } from 'antd';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
@@ -9,7 +9,7 @@ import { mouseJigglerModeAtom } from '@/jotai/mouse.ts';
 import { mouseJiggler } from '@/libs/mouse-jiggler';
 import * as storage from '@/libs/storage';
 
-export const Jiggler = () => {
+export const Jiggler = (): ReactElement => {
   const { t } = useTranslation();
   const [jigglerMode, setJigglerMode] = useAtom(mouseJigglerModeAtom);
 

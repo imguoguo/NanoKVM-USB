@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 
 import { device } from '@/libs/device';
 import { Modifiers } from '@/libs/device/keyboard.ts';
@@ -7,7 +7,7 @@ import { KeyboardCodes } from '@/libs/keyboard';
 const MAX_SIMULTANEOUS_KEYS = 6;
 const ModifierKeys = new Set(['Control', 'Shift', 'Alt', 'Meta']);
 
-export const Keyboard = () => {
+export const Keyboard = (): ReactElement => {
   const pressedKeysRef = useRef<Set<number>>(new Set());
   const pressedModifiersRef = useRef<Set<string>>(new Set());
 
@@ -65,7 +65,7 @@ export const Keyboard = () => {
   }
 
   // release all keys when page loses focus
-  async function releaseAllKeys() {
+  async function releaseAllKeys(): Promise<void> {
     if (pressedKeysRef.current.size === 0 && pressedModifiersRef.current.size === 0) {
       return;
     }
@@ -86,7 +86,7 @@ export const Keyboard = () => {
   }
 
   // send keyboard data
-  async function sendKeyData() {
+  async function sendKeyData(): Promise<void> {
     const modifiers = new Modifiers();
     pressedModifiersRef.current.forEach((code) => {
       modifiers.setModifier(code);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Divider } from 'antd';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
@@ -15,7 +15,7 @@ import { Settings } from './settings';
 import { Video } from './video';
 import { Recorder } from './recorder';
 
-export const Menu = () => {
+export const Menu = (): ReactElement => {
   const serialState = useAtomValue(serialStateAtom);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

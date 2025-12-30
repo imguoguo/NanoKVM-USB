@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Button, Divider, InputNumber, Modal, Popover } from 'antd';
 import clsx from 'clsx';
 import { useAtom, useSetAtom } from 'jotai';
@@ -11,7 +11,7 @@ import { camera } from '@/libs/camera';
 import * as storage from '@/libs/storage';
 import type { Resolution as VideoResolution } from '@/types';
 
-export const Resolution = () => {
+export const Resolution = (): ReactElement => {
   const { t } = useTranslation();
   const setIsKeyboardEnable = useSetAtom(isKeyboardEnableAtom);
   const [resolution, setResolution] = useAtom(resolutionAtom);
@@ -64,7 +64,7 @@ export const Resolution = () => {
     updateResolution(width, height);
   }
 
-  async function updateResolution(w: number, h: number) {
+  async function updateResolution(w: number, h: number): Promise<void> {
     try {
       await camera.updateResolution(w, h);
     } catch (err) {

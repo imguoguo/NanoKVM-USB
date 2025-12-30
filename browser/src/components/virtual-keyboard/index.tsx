@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import { XIcon } from 'lucide-react';
@@ -26,14 +26,14 @@ type KeyboardProps = {
   isBigScreen: boolean;
 };
 
-export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps) => {
+export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps): ReactElement => {
   const [isKeyboardOpen, setIsKeyboardOpen] = useAtom(isKeyboardOpenAtom);
 
   const [activeModifierKeys, setActiveModifierKeys] = useState<string[]>([]);
 
   const keyboardRef = useRef<any>(null);
 
-  async function onKeyPress(key: string) {
+  async function onKeyPress(key: string): Promise<void> {
     if (modifierKeys.includes(key)) {
       if (activeModifierKeys.includes(key)) {
         await sendKeydown(key);
@@ -47,7 +47,7 @@ export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps) => {
     await sendKeydown(key);
   }
 
-  async function onKeyReleased(key: string) {
+  async function onKeyReleased(key: string): Promise<void> {
     if (modifierKeys.includes(key)) {
       return;
     }
@@ -55,7 +55,7 @@ export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps) => {
     await sendKeyup();
   }
 
-  async function sendKeydown(key: string) {
+  async function sendKeydown(key: string): Promise<void> {
     const specialKey = specialKeyMap.get(key);
     const code = KeyboardCodes.get(specialKey ? specialKey : key);
     if (!code) {
@@ -68,7 +68,7 @@ export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps) => {
     await device.sendKeyboardData(modifiers, keys);
   }
 
-  async function sendKeyup() {
+  async function sendKeyup(): Promise<void> {
     const modifiers = new Modifiers();
     const keys = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00];
     await device.sendKeyboardData(modifiers, keys);
@@ -76,7 +76,7 @@ export const VirtualKeyboard = ({ isBigScreen }: KeyboardProps) => {
     setActiveModifierKeys([]);
   }
 
-  function getModifiers() {
+  function getModifiers(): Modifiers {
     const modifiers = new Modifiers();
 
     activeModifierKeys.forEach((modifierKey) => {

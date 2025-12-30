@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { resolutionAtom, videoRotateAtom } from '@/jotai/device.ts';
@@ -7,7 +7,7 @@ import { device } from '@/libs/device';
 import { Key } from '@/libs/device/mouse.ts';
 import { mouseJiggler } from '@/libs/mouse-jiggler';
 
-export const Absolute = () => {
+export const Absolute = (): ReactElement => {
   const resolution = useAtomValue(resolutionAtom);
   const videoRotate = useAtomValue(videoRotateAtom);
   const scrollDirection = useAtomValue(scrollDirectionAtom);
@@ -97,7 +97,7 @@ export const Absolute = () => {
       lastScrollTimeRef.current = currentTime;
     }
 
-    async function send(event: MouseEvent, scroll: number = 0) {
+    async function send(event: MouseEvent, scroll: number = 0): Promise<void> {
       const { x, y } = getCorrectedCoords(event.clientX, event.clientY);
       await device.sendMouseAbsoluteData(keyRef.current, 1, 1, x, y, scroll);
     }
