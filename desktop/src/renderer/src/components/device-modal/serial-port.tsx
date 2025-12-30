@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
 
 import { IpcEvents } from '@common/ipc-events'
-import { serialPortAtom, serialPortStateAtom, baudRateAtom } from '@renderer/jotai/device'
+import { serialPortAtom, serialStateAtom, baudRateAtom } from '@renderer/jotai/device'
 import * as storage from '@renderer/libs/storage'
 
 type Option = {
@@ -20,7 +20,7 @@ export const SerialPort = ({ setErrMsg }: SerialPortProps): ReactElement => {
   const { t } = useTranslation()
 
   const [serialPort, setSerialPort] = useAtom(serialPortAtom)
-  const [serialPortState, setSerialPortState] = useAtom(serialPortStateAtom)
+  const [serialState, setSerialState] = useAtom(serialStateAtom)
   const [baudRate, setBaudRate] = useAtom(baudRateAtom)
 
   const [options, setOptions] = useState<Option[]>([])
@@ -46,11 +46,11 @@ export const SerialPort = ({ setErrMsg }: SerialPortProps): ReactElement => {
 
     const rmListener = window.electron.ipcRenderer.on(IpcEvents.OPEN_SERIAL_PORT_RSP, (_, err) => {
       if (err === '') {
-        setSerialPortState('connected')
+        setSerialState('connected')
       } else {
         setIsFailed(true)
         setSerialPort('')
-        setSerialPortState('disconnected')
+        setSerialState('disconnected')
         storage.setSerialPort('')
         setErrMsg(err)
       }
@@ -75,8 +75,8 @@ export const SerialPort = ({ setErrMsg }: SerialPortProps): ReactElement => {
   }
 
   async function selectSerialPort(port: string, customBaudRate?: number): Promise<void> {
-    if (serialPortState === 'connecting') return
-    setSerialPortState('connecting')
+    if (serialState === 'connecting') return
+    setSerialState('connecting')
     setIsFailed(false)
     setErrMsg('')
 
@@ -91,14 +91,14 @@ export const SerialPort = ({ setErrMsg }: SerialPortProps): ReactElement => {
       setSerialPort(port)
       storage.setSerialPort(port)
     } else {
-      setSerialPortState('disconnected')
+      setSerialState('disconnected')
     }
   }
 
   async function closeSerialPort(): Promise<void> {
     await window.electron.ipcRenderer.invoke(IpcEvents.CLOSE_SERIAL_PORT)
     setSerialPort('')
-    setSerialPortState('disconnected')
+    setSerialState('disconnected')
     storage.setSerialPort('')
   }
 
@@ -106,7 +106,7 @@ export const SerialPort = ({ setErrMsg }: SerialPortProps): ReactElement => {
     setBaudRate(newBaudRate)
     storage.setBaudRate(newBaudRate)
 
-    if (serialPort && serialPortState === 'connected') {
+    if (serialPort && serialState === 'connected') {
       const currentPort = serialPort
       await closeSerialPort()
       setTimeout(() => {
@@ -121,7 +121,7 @@ export const SerialPort = ({ setErrMsg }: SerialPortProps): ReactElement => {
         value={serialPort || undefined}
         className="w-[250px]"
         options={options}
-        loading={serialPortState === 'connecting'}
+        loading={serialState === 'connecting'}
         status={isFailed ? 'error' : undefined}
         placeholder={t('modal.selectSerial')}
         onChange={(serialPort) => selectSerialPort(serialPort)}

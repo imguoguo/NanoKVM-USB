@@ -13,7 +13,7 @@ import { Mouse } from '@renderer/components/mouse'
 import { VirtualKeyboard } from '@renderer/components/virtual-keyboard'
 import {
   resolutionAtom,
-  serialPortStateAtom,
+  serialStateAtom,
   videoRotateAtom,
   videoScaleAtom,
   videoStateAtom
@@ -33,7 +33,7 @@ const App = (): ReactElement => {
   const [videoRotate, setVideoRotate] = useAtom(videoRotateAtom)
   const [videoScale, setVideoScale] = useAtom(videoScaleAtom)
   const videoState = useAtomValue(videoStateAtom)
-  const serialPortState = useAtomValue(serialPortStateAtom)
+  const serialState = useAtomValue(serialStateAtom)
   const mouseStyle = useAtomValue(mouseStyleAtom)
   const isKeyboardEnable = useAtomValue(isKeyboardEnableAtom)
   const setResolution = useSetAtom(resolutionAtom)
@@ -187,7 +187,7 @@ const App = (): ReactElement => {
     <>
       <DeviceModal />
 
-      {videoState === 'connected' && serialPortState === 'connected' && (
+      {videoState === 'connected' && serialState === 'connected' && (
         <>
           <Menu />
           <Mouse />

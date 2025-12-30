@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { useAtomValue } from 'jotai'
 import { MenuIcon, XIcon } from 'lucide-react'
 
-import { serialPortStateAtom } from '@renderer/jotai/device'
+import { serialStateAtom } from '@renderer/jotai/device'
 import * as storage from '@renderer/libs/storage'
 
 import { Fullscreen } from './fullscreen'
@@ -16,7 +16,7 @@ import { Video } from './video'
 import { Recorder } from './recorder'
 
 export const Menu = (): ReactElement => {
-  const serialPortState = useAtomValue(serialPortStateAtom)
+  const serialState = useAtomValue(serialStateAtom)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -42,7 +42,7 @@ export const Menu = (): ReactElement => {
         >
           <Video />
 
-          {serialPortState === 'connected' && (
+          {serialState === 'connected' && (
             <>
               <SerialPort />
 
